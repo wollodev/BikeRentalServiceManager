@@ -27,6 +27,9 @@ public class BikeStationResource {
     @Autowired
     private BikeStationRepository bikestationRepository;
 
+    @Autowired
+    private BikeRepository bikeRepository;
+
     /**
      * POST  /rest/bikestations -> Create a new bikestation.
      */
@@ -50,6 +53,7 @@ public class BikeStationResource {
         log.debug("REST request to add Bike : {}", bike);
         BikeStation bikeStation = bikestationRepository.findOne(bikeStationId);
         bikeStation.addBike(bike);
+        bikeRepository.save(bike);
         bikestationRepository.save(bikeStation);
     }
 

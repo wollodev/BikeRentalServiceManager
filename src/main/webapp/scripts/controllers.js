@@ -299,7 +299,7 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
 
         $scope.create = function () {
-            $http.post('app/rest/bikestations/1/addBike', $scope.bike).success(
+            $http.post('app/rest/bikestations/' + $routeParams.bikestationId + '/addBike', $scope.bike).success(
                 function () {
                     $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
                     $('#saveBikeModal').modal('hide');
@@ -308,14 +308,14 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         };
 
         $scope.update = function (id) {
-            $scope.bikestation = BikeStation.get({id: id});
-            $('#saveBikeStationModal').modal('show');
+            $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
+            $('#saveBikeModal').modal('show');
         };
 
         $scope.delete = function (id) {
-            BikeStation.delete({id: id},
+            Bike.delete({id: id},
                 function () {
-                    $scope.bikestations = BikeStation.query();
+                    $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
                 });
         };
 

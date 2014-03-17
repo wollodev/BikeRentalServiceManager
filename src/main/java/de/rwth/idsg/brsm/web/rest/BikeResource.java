@@ -2,9 +2,12 @@ package de.rwth.idsg.brsm.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import de.rwth.idsg.brsm.domain.Bike;
+import de.rwth.idsg.brsm.domain.BikeStation;
 import de.rwth.idsg.brsm.repository.BikeRepository;
+import de.rwth.idsg.brsm.repository.BikeStationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -22,6 +25,9 @@ public class BikeResource {
 
     @Inject
     private BikeRepository bikeRepository;
+
+    @Autowired
+    private BikeStationRepository bikeStationRepository;
 
     /**
      * POST  /rest/bikes -> Create a new bike.
@@ -72,6 +78,12 @@ public class BikeResource {
     @Timed
     public void delete(@PathVariable Long id, HttpServletResponse response) {
         log.debug("REST request to delete Bike : {}", id);
+//        BikeStation bikeStation = bikeRepository.findOne(id).getBikeStation();
+//        if (bikeStation != null) {
+//            bikeStation.removeBike(bikeRepository.findOne(id));
+//            bikeStationRepository.save(bikeStation);
+//        }
+
         bikeRepository.delete(id);
     }
 }

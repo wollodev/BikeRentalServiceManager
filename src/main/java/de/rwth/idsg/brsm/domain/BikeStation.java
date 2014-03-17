@@ -39,10 +39,16 @@ public class BikeStation implements Serializable {
     @Column(name = "number_ports")
     private int numberPorts;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "bikeStation")
+    @OneToMany(cascade =  CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "bikeStation")
     @JsonManagedReference
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Bike> bikes;
+
+    @PreRemove
+    public void onDelete(){
+        for(Bike bike : getBikes()){
+            bike.setBikeStation(null);
+        }
+    }
 
 //    protected BikeStation() {}
 //
