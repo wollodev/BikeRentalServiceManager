@@ -1,0 +1,8 @@
+{
+  "generator-jhipster": {
+    "baseName": "bike-rental-service-manager",
+    "packageName": "de.rwth.idsg.brsm",
+    "packageFolder": "de/rwth/idsg/brsm",
+    "hibernateCache": "ehcache"
+  }
+}

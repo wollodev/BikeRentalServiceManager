@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="3" author="wolfgang">
+
+        <createTable tableName="T_BIKE_STATION">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="address_street" type="varchar(255)"/>
+            <column name="address_city" type="varchar(255)"/>
+            <column name="address_zip" type="varchar(255)"/>
+            <column name="opening_hours" type="varchar(255)"/>
+            <column name="number_ports" type="int"/>
+        </createTable>
+
+        <createTable tableName="T_BIKE">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tag" type="varchar(255)"/>
+            <column name="bike_station_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="bike_station_id"
+                                 baseTableName="T_BIKE"
+                                 constraintName="fk_bike_bike_station"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_BIKE_STATION"/>
+
+
+    </changeSet>
+
+</databaseChangeLog>
