@@ -60,6 +60,16 @@ bikeRentalServiceManagerApp
                         }]
                     }
                 })
+                .when('/bikes', {
+                    templateUrl: 'views/bikes.html',
+                    controller: 'BikeController',
+                    resolve:{
+                        resolvedBike: ['Bike', function (Bike) {
+                            console.log(Bike.query());
+                            return Bike.query();
+                        }]
+                    }
+                })
                 .when('/bikestations/:bikestationId', {
                     templateUrl: 'views/bikestation.html',
                     controller: 'BikeStationDetailController'

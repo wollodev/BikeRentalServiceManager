@@ -26,15 +26,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Sample text attribute</label>
+                            <label>Tag</label>
                             <input type="text" class="form-control" name="test"
                                    ng-model="bike.tag" ng-minlength=1 ng-maxlength=50 required>
                         </div>
 
                         <div class="form-group">
-                            <label>Sample date attribute</label>
+                            <label>Is Rented?</label>
                             <input type="date" class="form-control" name="test"
-                                   ng-model="bike.sampleDateAttribute" required>
+                                   ng-model="bike.rented" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Bike Station IdD</label>
+                            <input type="text" class="form-control" name="test"
+                                   ng-model="bike.bikeStationId" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -53,7 +59,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Sample text</th>
-                    <th>Sample date</th>
+                    <th>Is Rented?</th>
+                    <th>Bike Station ID</th>
                     <th></th>
                 </tr>
             </thead>
@@ -61,7 +68,9 @@
                 <tr ng-repeat="bike in bikes">
                     <td>{{bike.id}}</td>
                     <td>{{bike.tag}}</td>
-                    <td>{{bike.sampleDateAttribute}}</td>
+                    <!--<td>{{bike.sampleDateAttribute}}</td>-->
+                    <td>{{bike.rented}}</td>
+                    <td>{{bike.bikeStationId}}</td>
                     <td>
                         <button type="submit"
                                 ng-click="update(bike.id)"
