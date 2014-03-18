@@ -45,6 +45,13 @@ public class Bike implements Serializable {
         this.id = id;
     }
 
+    public long getBikeStationId() {
+        if (bikeStation == null) {
+            return 0;
+        }
+        return bikeStation.getId();
+    }
+
     public String getTag() {
         return tag;
     }
