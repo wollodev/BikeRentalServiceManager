@@ -1,5 +1,4 @@
 <div>
-
     <h2>Bikestation: {{bikestation.name}}</h2>
 
     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#saveBikeModal">
@@ -65,9 +64,22 @@
                             class="btn btn-danger">
                         <span class="glyphicon glyphicon-remove-circle"></span> Delete
                     </button>
+                    <button ng-if="bike.rented" type="submit" id="rentButton"
+                            ng-click="rent(bike)"
+                            class="btn btn-warning">
+                        <span class="glyphicon glyphicon-arrow-left"></span> Take Back
+                    </button>
+                    <button ng-if="!bike.rented" type="submit" id="rentButton"
+                            ng-click="rent(bike)"
+                            class="btn btn-info">
+                        <span class="glyphicon glyphicon-arrow-right"></span> Rent Bike
+                    </button>
+
+                    <button type="submit" class="btn btn-primary ladda-button" data-style="expand-left"><span class="ladda-label">expand-left</span></button>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+    <a href="/#/bikestations"><span class="label label-info">Back</span></a>
 </div>

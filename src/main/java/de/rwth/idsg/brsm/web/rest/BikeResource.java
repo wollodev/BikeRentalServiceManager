@@ -38,6 +38,13 @@ public class BikeResource {
     @Timed
     public void create(@RequestBody Bike bike) {
         log.debug("REST request to save Bike : {}", bike);
+
+        BikeStation bikeStation = bikeRepository.findOne(bike.getId()).getBikeStation();
+
+        if (bikeStation != null) {
+            bike.setBikeStation(bikeStation);
+        }
+
         bikeRepository.save(bike);
     }
 

@@ -21,6 +21,9 @@ public class Bike implements Serializable {
     @Column(name = "tag")
     private String tag;
 
+    @Column(name = "is_rented")
+    private boolean isRented;
+
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name="bike_station_id")
@@ -50,6 +53,14 @@ public class Bike implements Serializable {
         this.tag = tag;
     }
 
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean isRented) {
+        this.isRented = isRented;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -72,6 +83,7 @@ public class Bike implements Serializable {
     public String toString() {
         return "Bike{" +
                 "id=" + id + '\'' +
+                "isRented=" + isRented + '\'' +
                 ", tag='" + tag +
                 '}';
     }

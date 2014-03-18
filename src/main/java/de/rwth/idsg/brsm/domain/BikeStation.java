@@ -1,6 +1,5 @@
 package de.rwth.idsg.brsm.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -39,7 +38,7 @@ public class BikeStation implements Serializable {
     @Column(name = "number_ports")
     private int numberPorts;
 
-    @OneToMany(cascade =  CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "bikeStation")
+    @OneToMany(cascade =  CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "bikeStation")
     @JsonManagedReference
     private Set<Bike> bikes;
 

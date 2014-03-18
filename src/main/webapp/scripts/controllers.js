@@ -322,4 +322,33 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         $scope.clear = function () {
 //            $scope.bikestation = {id: "", sampleTextAttribute: "", sampleDateAttribute: ""};
         };
+
+        $scope.rent = function (bike) {
+            console.log("toggle state");
+            console.log(bike);
+
+            var tmpBike = angular.copy(bike);
+
+            tmpBike.rented = !tmpBike.rented;
+
+            Bike.save(tmpBike,
+                function () {
+                    bike.rented = tmpBike.rented;
+                });
+        };
+
+        Ladda.bind( 'input[type=submit]', {timeout: 2000});
+    console.log("bind button");
+
+
+        // You can control loading explicitly using the JavaScript API
+        // as outlined below:
+
+        // var l = Ladda.create( document.querySelector( 'button' ) );
+        // l.start();
+        // l.stop();
+        // l.toggle();
+        // l.isLoading();
+        // l.setProgress( 0-1 );
+
     }]);

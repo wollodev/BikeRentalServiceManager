@@ -35,4 +35,10 @@
 
     </changeSet>
 
+    <changeSet id="4" author="Wolfgang">
+        <addColumn tableName="T_BIKE">
+            <column name="is_rented" type="boolean" defaultValueBoolean="false"></column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

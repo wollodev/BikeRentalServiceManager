@@ -84,7 +84,7 @@
             <tbody>
                 <tr ng-repeat="bikestation in bikestations">
                     <td>{{bikestation.id}}</td>
-                    <td>{{bikestation.name}}</td>
+                    <td><a href="/#/bikestations/{{bikestation.id}}">{{bikestation.name}}</a></td>
                     <td>
                         <button type="submit"
                                 ng-click="update(bikestation.id)"
