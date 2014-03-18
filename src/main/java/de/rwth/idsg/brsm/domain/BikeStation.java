@@ -135,6 +135,8 @@ public class BikeStation implements Serializable {
         this.bikes = bikes;
     }
 
+    public int getNumberOfBikes() { return bikes.size(); }
+
 
 
     @Override
