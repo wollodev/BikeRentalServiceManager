@@ -37,7 +37,14 @@ angular.module('bikeRentalServiceManagerApp')
                 });
             }
         };
-    }]);
+    }])
 
 
-    
+  .directive('uiLadda', [function () {
+    return {
+        link: function postLink(scope, element, attrs) {
+            var ladda = Ladda.create(element[0]);
+            element[0].ladda = ladda;
+        }
+    };
+}]);

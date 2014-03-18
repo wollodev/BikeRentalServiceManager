@@ -64,18 +64,16 @@
                             class="btn btn-danger">
                         <span class="glyphicon glyphicon-remove-circle"></span> Delete
                     </button>
-                    <button ng-if="bike.rented" type="submit" id="rentButton"
-                            ng-click="rent(bike)"
-                            class="btn btn-warning">
-                        <span class="glyphicon glyphicon-arrow-left"></span> Take Back
-                    </button>
-                    <button ng-if="!bike.rented" type="submit" id="rentButton"
-                            ng-click="rent(bike)"
-                            class="btn btn-info">
-                        <span class="glyphicon glyphicon-arrow-right"></span> Rent Bike
+                    <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" class="btn btn-info ladda-button"data-style="zoom-out">
+                        <span class="ladda-label">
+                            <span ng-if="bike.rented"><span class="glyphicon glyphicon-arrow-left"></span> Return Bike</span>
+                        </span>
+                        <span class="ladda-label">
+                            <span ng-if="!bike.rented"><span class="glyphicon glyphicon-arrow-right"></span> Rent Bike</span>
+                        </span>
                     </button>
 
-                    <button type="submit" class="btn btn-primary ladda-button" data-style="expand-left"><span class="ladda-label">expand-left</span></button>
+
                 </td>
             </tr>
             </tbody>
@@ -83,3 +81,4 @@
     </div>
     <a href="/#/bikestations"><span class="label label-info">Back</span></a>
 </div>
+

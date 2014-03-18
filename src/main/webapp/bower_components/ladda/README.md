@@ -1,12 +1,15 @@
-# Ladda for Bootstrap 3
+# Ladda
 
 Buttons with built-in loading indicators, effectively bridging the gap between action and feedback. 
 
-[Check out the demo page](http://msurguy.github.io/ladda-bootstrap/).
+[Check out the demo page](http://lab.hakim.se/ladda/).
+
 
 ## Instructions
 
-Please see the demo page for the details: (http://msurguy.github.io/ladda-bootstrap/).
+Release downloads and change history is available here <https://github.com/hakimel/Ladda/releases>.
+
+The compiled files for the project that you should be using are available in the **/dist** directory. You will need to include both the **ladda.min.js** and **spin.min.js** files as well as ONE of the two style sheets. If you want the button styles used in the [Ladda example page](http://lab.hakim.se/ladda) use the **ladda.min.css** file, if you want to have the functional buttons without the visual style (colors, padding etc) use the **ladda-themeless.min.css** file.
 
 #### HTML
 
@@ -63,9 +66,23 @@ All loading animations on the page can be stopped by using:
 Ladda.stopAll();
 ```
 
+## Module
+
+The spinner and Ladda can be loaded as a module using either Common.js or AMD.
+
+```javascript
+// Using Require.js
+define(['ladda'], function(Ladda) {
+	// Make Buttons Here
+});
+```
 ## Browser support
 
 The project is tested in Chrome and Firefox. It Should Work™ in the current stable releases of Chrome, Firefox, Safari as well as IE9 and up.
+
+## Changelog
+
+<https://github.com/hakimel/Ladda/releases>
 
 ## License
 
