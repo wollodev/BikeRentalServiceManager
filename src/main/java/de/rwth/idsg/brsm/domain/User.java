@@ -1,6 +1,7 @@
 package de.rwth.idsg.brsm.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
@@ -40,6 +41,11 @@ public class User implements Serializable {
     @Size(min = 0, max = 100)
     private String email;
 
+
+    @OneToOne(mappedBy = "user")
+    @JsonManagedReference
+    private BikeStation bikeStation;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -53,6 +59,16 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens;
+
+    public BikeStation getBikeStation() {
+        return bikeStation;
+    }
+
+    public void setBikeStation(BikeStation bikeStation) {
+        this.bikeStation = bikeStation;
+    }
+
+
 
     public String getLogin() {
         return login;

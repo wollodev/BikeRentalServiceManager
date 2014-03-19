@@ -135,7 +135,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN);
     }
 
-    @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
+    @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
     private static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
     }
 }

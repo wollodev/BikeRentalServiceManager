@@ -3,16 +3,20 @@ package de.rwth.idsg.brsm.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import de.rwth.idsg.brsm.domain.Bike;
 import de.rwth.idsg.brsm.domain.BikeStation;
+import de.rwth.idsg.brsm.domain.User;
 import de.rwth.idsg.brsm.repository.BikeRepository;
 import de.rwth.idsg.brsm.repository.BikeStationRepository;
-import de.rwth.idsg.brsm.service.BikeStationService;
+import de.rwth.idsg.brsm.security.AuthoritiesConstants;
+import de.rwth.idsg.brsm.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +34,9 @@ public class BikeStationResource {
     @Autowired
     private BikeRepository bikeRepository;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * POST  /rest/bikestations -> Create a new bikestation.
      */
@@ -38,7 +45,9 @@ public class BikeStationResource {
             produces = "application/json")
     @Timed
     public void create(@RequestBody BikeStation bikestation) {
-        log.debug("REST request to save BikeStation : {}", bikestation);
+        User currentUser = userService.getUserWithAuthorities();
+        bikestation.setUser(currentUser);
+        log.debug("REST request: to save BikeStation : {}", bikestation);
         bikestationRepository.save(bikestation);
     }
 
@@ -67,9 +76,11 @@ public class BikeStationResource {
             method = RequestMethod.GET,
             produces = "application/json")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<BikeStation> getAll() {
         log.debug("REST request to get all BikeStations");
-        List<BikeStation> bikeStations = bikestationRepository.findAll();
+        User currentUser = userService.getUserWithAuthorities();
+        List<BikeStation> bikeStations = bikestationRepository.findByUser(currentUser);
 
         return bikeStations;
     }

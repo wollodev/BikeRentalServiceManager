@@ -1,5 +1,6 @@
 package de.rwth.idsg.brsm.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -38,15 +39,28 @@ public class BikeStation implements Serializable {
     @Column(name = "number_ports")
     private int numberPorts;
 
-    @OneToMany(cascade =  CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "bikeStation")
+    @OneToOne
+    @JoinColumn(name = "user_login")
+    @JsonBackReference
+    private User user;
+
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "bikeStation")
     @JsonManagedReference
     private Set<Bike> bikes;
 
     @PreRemove
-    public void onDelete(){
-        for(Bike bike : getBikes()){
+    public void onDelete() {
+        for (Bike bike : getBikes()) {
             bike.setBikeStation(null);
         }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 //    protected BikeStation() {}
@@ -135,8 +149,9 @@ public class BikeStation implements Serializable {
         this.bikes = bikes;
     }
 
-    public int getNumberOfBikes() { return bikes.size(); }
-
+    public int getNumberOfBikes() {
+        return bikes.size();
+    }
 
 
     @Override
@@ -165,7 +180,7 @@ public class BikeStation implements Serializable {
                 ", addressCity='" + addressCity + '\'' +
                 ", addressZip='" + addressZip + '\'' +
                 ", openingHours='" + openingHours + '\'' +
-                ", numberPorts='" + numberPorts  +
+                ", numberPorts='" + numberPorts +
                 '}';
     }
 }
