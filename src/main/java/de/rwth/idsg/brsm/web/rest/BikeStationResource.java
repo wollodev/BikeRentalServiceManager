@@ -4,24 +4,23 @@ import com.codahale.metrics.annotation.Timed;
 import de.rwth.idsg.brsm.domain.Bike;
 import de.rwth.idsg.brsm.domain.BikeStation;
 import de.rwth.idsg.brsm.domain.User;
-import de.rwth.idsg.brsm.repository.BikeRepository;
 import de.rwth.idsg.brsm.repository.BikeStationRepository;
 import de.rwth.idsg.brsm.security.AuthoritiesConstants;
+import de.rwth.idsg.brsm.security.SecurityUtils;
 import de.rwth.idsg.brsm.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * REST controller for managing BikeStation.
  */
+@RolesAllowed(AuthoritiesConstants.MANAGER)
 @RestController
 @RequestMapping("/app")
 public class BikeStationResource {
@@ -30,9 +29,6 @@ public class BikeStationResource {
 
     @Autowired
     private BikeStationRepository bikestationRepository;
-
-    @Autowired
-    private BikeRepository bikeRepository;
 
     @Autowired
     private UserService userService;
@@ -62,7 +58,6 @@ public class BikeStationResource {
         log.debug("REST request to add Bike : {}", bike);
         BikeStation bikeStation = bikestationRepository.findOne(bikeStationId);
         bikeStation.addBike(bike);
-        //bikeRepository.save(bike);
         bikestationRepository.save(bikeStation);
     }
 
@@ -71,23 +66,27 @@ public class BikeStationResource {
     /**
      * GET  /rest/bikestations -> get all the bikestations.
      */
-    @Transactional(readOnly=true)
+    @RolesAllowed(AuthoritiesConstants.LENDER)
     @RequestMapping(value = "/rest/bikestations",
             method = RequestMethod.GET,
             produces = "application/json")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
     public List<BikeStation> getAll() {
         log.debug("REST request to get all BikeStations");
-        User currentUser = userService.getUserWithAuthorities();
-        List<BikeStation> bikeStations = bikestationRepository.findByUser(currentUser);
 
-        return bikeStations;
+        if (!SecurityUtils.isAuthenticated()) {
+            return bikestationRepository.findAll();
+        }
+
+        User currentUser = userService.getUserWithAuthorities();
+
+        return bikestationRepository.findByUser(currentUser);
     }
 
     /**
      * GET  /rest/bikestations/:id -> get the "id" bikestation.
      */
+    @RolesAllowed(AuthoritiesConstants.LENDER)
     @RequestMapping(value = "/rest/bikestations/{id}",
             method = RequestMethod.GET,
             produces = "application/json")

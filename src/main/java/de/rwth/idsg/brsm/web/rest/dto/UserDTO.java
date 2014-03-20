@@ -4,15 +4,17 @@ import java.util.Map;
 
 public class UserDTO {
 
-    private final String login;
+    private String login;
     
-    private final String firstName;
+    private String firstName;
     
-    private final String lastName;
+    private String lastName;
     
-    private final String email;
+    private String email;
 
-    private final Map<String, Boolean> roles;
+    private Map<String, Boolean> roles;
+
+    public UserDTO() {}
 
     public UserDTO(String login, String firstName, String lastName, String email, Map<String, Boolean> roles) {
         this.login = login;
@@ -40,6 +42,26 @@ public class UserDTO {
 
     public Map<String, Boolean> getRoles() {
         return roles;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRoles(Map<String, Boolean> roles) {
+        this.roles = roles;
     }
 
     @Override

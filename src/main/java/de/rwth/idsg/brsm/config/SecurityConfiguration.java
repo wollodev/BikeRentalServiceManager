@@ -78,7 +78,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/images/**")
             .antMatchers("/scripts/**")
             .antMatchers("/styles/**")
-            .antMatchers("/view/**");
+            .antMatchers("/view/**")
+            .antMatchers("/console/**");
     }
 
     @Override
@@ -109,6 +110,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
             .authorizeRequests()
                 .antMatchers("/app/rest/authenticate").permitAll()
+                .antMatchers("/app/rest/bikestations*").hasAuthority(AuthoritiesConstants.LENDER)
+                .antMatchers("/app/rest/bikestations/**").hasAuthority(AuthoritiesConstants.LENDER)
                 .antMatchers("/app/rest/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/app/**").authenticated()
                 .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
@@ -135,7 +138,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN);
     }
 
-    @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
+    @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
     private static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
     }
 }

@@ -268,6 +268,7 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
         $scope.bikestations = resolvedBikeStation;
 
         $scope.create = function () {
+            delete $scope.bikestation.numberOfBikes;
             BikeStation.save($scope.bikestation,
                 function () {
                     $scope.bikestations = BikeStation.query();
@@ -326,7 +327,6 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         $scope.rent = function (bike) {
 
             var ladda = document.querySelector("#bike" + bike.id).ladda;
-            var ladda = document.querySelector("#bike" + bike.id).
 
             ladda.start();
 
@@ -337,6 +337,8 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
 
             tmpBike.rented = !tmpBike.rented;
 
+            delete tmpBike.bikeStationId;
+
             Bike.save(tmpBike,
                 function () {
                     bike.rented = tmpBike.rented;
@@ -344,17 +346,13 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
                     ladda.stop();
 
                 });
-        };
 
-        $scope.progress = function () {
-            console.log("progress");
-            $scope.loading = true;
-
-            $timeout(function () {
-                $scope.loading = false;
-
-            }, 3000);
-
+//            $http.post('app/rest/bikes/' + tmpBike.id + '/changeRentState', null, {params : { state : tmpBike.rented}}).success(
+//                function () {
+//                    bike.rented = tmpBike.rented;
+//
+//                    ladda.stop();
+//                });
         };
 
     }]);

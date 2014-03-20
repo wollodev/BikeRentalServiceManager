@@ -4,3 +4,6 @@ admin;ROLE_USER
 user;ROLE_USER
 lender;ROLE_LENDER
 lender;ROLE_USER
+manager;ROLE_USER
+manager;ROLE_LENDER
+manager;ROLE_MANAGER

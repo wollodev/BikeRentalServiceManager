@@ -112,6 +112,10 @@ bikeRentalServiceManagerApp
 
             $rootScope.$on("$routeChangeStart", function(event, next, current) {
                 // Check if the status of the user. Is it authenticated or not?
+                if ($location.path() == "/bikestations") {
+                    return;
+                }
+
                 AuthenticationSharedService.authenticate().then(function(response) {
                     if (response.data == '') {
                         $rootScope.$broadcast('event:auth-loginRequired');

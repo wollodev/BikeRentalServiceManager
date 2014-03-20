@@ -1,37 +1,38 @@
 package de.rwth.idsg.brsm.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.rwth.idsg.brsm.domain.Bike;
 import de.rwth.idsg.brsm.domain.BikeStation;
 import de.rwth.idsg.brsm.repository.BikeRepository;
-import de.rwth.idsg.brsm.repository.BikeStationRepository;
+import de.rwth.idsg.brsm.security.AuthoritiesConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * REST controller for managing Bike.
  */
+@RolesAllowed(AuthoritiesConstants.MANAGER)
 @RestController
 @RequestMapping("/app")
 public class BikeResource {
 
     private final Logger log = LoggerFactory.getLogger(BikeResource.class);
 
-    @Inject
-    private BikeRepository bikeRepository;
-
     @Autowired
-    private BikeStationRepository bikeStationRepository;
+    private BikeRepository bikeRepository;
 
     /**
      * POST  /rest/bikes -> Create a new bike.
      */
+    @RolesAllowed(AuthoritiesConstants.LENDER)
     @RequestMapping(value = "/rest/bikes",
             method = RequestMethod.POST,
             produces = "application/json")
@@ -45,6 +46,17 @@ public class BikeResource {
             bike.setBikeStation(bikeStation);
         }
 
+        bikeRepository.save(bike);
+    }
+
+    @RolesAllowed(AuthoritiesConstants.LENDER)
+    @RequestMapping(value = "/rest/bikestations/rentBike",
+            method = RequestMethod.POST,
+            produces = "application/json")
+    @Timed
+    public void changeRentState(@PathVariable long id, @RequestParam Boolean state) {
+        Bike bike = bikeRepository.findOne(id);
+        bike.setRented(state);
         bikeRepository.save(bike);
     }
 
