@@ -42,9 +42,9 @@ public class User implements Serializable {
     private String email;
 
 
-    @OneToOne(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private BikeStation bikeStation;
+    private Set<BikeStation> bikeStations;
 
     @JsonIgnore
     @ManyToMany
@@ -60,15 +60,22 @@ public class User implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens;
 
-    public BikeStation getBikeStation() {
-        return bikeStation;
+    public Set<BikeStation> getBikeStations() {
+        return bikeStations;
     }
 
-    public void setBikeStation(BikeStation bikeStation) {
-        this.bikeStation = bikeStation;
+    public void setBikeStations(Set<BikeStation> bikeStations) {
+        this.bikeStations = bikeStations;
     }
 
+    public void addBikeStation(BikeStation bikeStation) {
+        this.bikeStations.add(bikeStation);
+        bikeStation.setUser(this);
+    }
 
+    public void removeBikeStation(BikeStation bikeStation) {
+        this.bikeStations.remove(bikeStation);
+    }
 
     public String getLogin() {
         return login;

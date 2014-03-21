@@ -61,8 +61,6 @@ public class BikeStationResource {
         bikestationRepository.save(bikeStation);
     }
 
-
-
     /**
      * GET  /rest/bikestations -> get all the bikestations.
      */

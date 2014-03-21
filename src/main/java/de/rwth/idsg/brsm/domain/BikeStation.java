@@ -39,12 +39,12 @@ public class BikeStation implements Serializable {
     @Column(name = "number_ports")
     private int numberPorts;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_login")
     @JsonBackReference
     private User user;
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "bikeStation")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "bikeStation", orphanRemoval = true)
     @JsonManagedReference
     private Set<Bike> bikes;
 
