@@ -1,4 +1,4 @@
-README for Bike Rental Service Manager
+Bike Rental Service Manager
 ==========================
 Wie starte ich die Anwendung?
 >From your IDE, right-click on the "Application" class at the root of your Java package hierarchy, and run it directly.
