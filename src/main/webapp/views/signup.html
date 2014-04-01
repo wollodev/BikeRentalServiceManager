@@ -1,0 +1,44 @@
+<div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h1 translate="signup.title">Sign up</h1>
+
+            <!--<div class="alert alert-danger" ng-show="authenticationError" translate="login.messages.error.authentication">-->
+                <!--<strong>Authentication failed!</strong> Please check your credentials and try again.-->
+            <!--</div>-->
+            <form class="form" role="form" name="form">
+                <div class="ng-invalid" ng-show="form.$dirty && form.$invalid">{{form.repeatpassword.$error.match}}</div>
+
+                <div class="form-group">
+                    <label for="username" translate="signup.form.username">Login</label>
+                    <input type="text" class="form-control" id="username" placeholder="{{'signup.form.username.placeholder' | translate}}" ng-model="username">
+                </div>
+                <div class="form-group">
+                    <label for="password" translate="signup.form.password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="{{'signup.form.password.placeholder' | translate}}"
+                           ng-model="password" ng-minlength="3">
+                    <label for="password" translate="signup.form.repeatpassword">Repeat Password</label>
+                    <input type="password" class="form-control" id="repeatpassword" name="repeatpassword" placeholder="{{'signup.form.password.placeholder' | translate}}"
+                           data-match="password" ng-model="repeatpassword">
+                </div>
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="{{'signup.form.firstname.placeholder' | translate}}" ng-model="firstname">
+
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="{{'signup.form.lastname.placeholder' | translate}}" ng-model="lastname">
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<label for="rememberMe" translate="login.form.rememberme">Automatic login</label>-->
+                    <!--<input type="checkbox" class="form-control" id="rememberMe"-->
+                           <!--ng-model="rememberMe" checked>-->
+                <!--</div>-->
+                <div>
+                    <button type="submit" class="btn btn-primary" ng-click="signup()" translate="signup.form.button">Authenticate</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

@@ -3,7 +3,7 @@
 /* App Module */
 
 var bikeRentalServiceManagerApp = angular.module('bikeRentalServiceManagerApp', ['http-auth-interceptor', 'tmh.dynamicLocale',
-    'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate']);
+    'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate', 'google-maps']);
 
 bikeRentalServiceManagerApp
     .config(['$routeProvider', '$httpProvider', '$translateProvider',  'tmhDynamicLocaleProvider',
@@ -12,6 +12,10 @@ bikeRentalServiceManagerApp
                 .when('/login', {
                     templateUrl: 'views/login.html',
                     controller: 'LoginController'
+                })
+                .when('/signup', {
+                    templateUrl: 'views/signup.html',
+                    controller: 'SignupController'
                 })
                 .when('/settings', {
                     templateUrl: 'views/settings.html',
@@ -74,6 +78,15 @@ bikeRentalServiceManagerApp
                     templateUrl: 'views/bikestation.html',
                     controller: 'BikeStationDetailController'
                 })
+                .when('/demo', {
+                    templateUrl: 'views/demo.html',
+                    controller: 'DemoController',
+                    resolve: {
+                        resolvedBikeStation: ['BikeStation', function (BikeStation) {
+                            return BikeStation.query();
+                        }]
+                    }
+                })
                 .otherwise({
                     templateUrl: 'views/main.html',
                     controller: 'MainController'
@@ -112,9 +125,9 @@ bikeRentalServiceManagerApp
 
             $rootScope.$on("$routeChangeStart", function(event, next, current) {
                 // Check if the status of the user. Is it authenticated or not?
-                if ($location.path() == "/bikestations") {
-                    return;
-                }
+//                if ($location.path() == "/bikestations" || $location.path() == "/demo") {
+//                    return;
+//                }
 
                 AuthenticationSharedService.authenticate().then(function(response) {
                     if (response.data == '') {
@@ -136,7 +149,7 @@ bikeRentalServiceManagerApp
             // Call when the 401 response is returned by the client
             $rootScope.$on('event:auth-loginRequired', function(rejection) {
                 $rootScope.authenticated = false;
-                if ($location.path() !== "/" && $location.path() !== "") {
+                if ($location.path() !== "/" && $location.path() !== "" && $location.path() !== "/signup") {
                     $location.path('/login').replace();
                 }
             });

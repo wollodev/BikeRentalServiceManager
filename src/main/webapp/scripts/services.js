@@ -120,9 +120,10 @@ bikeRentalServiceManagerApp.factory('AuthenticationSharedService', ['$rootScope'
 bikeRentalServiceManagerApp.factory('BikeStation', ['$resource',
     function ($resource) {
         return $resource('app/rest/bikestations/:id', {}, {
-            'query': { method: 'GET', isArray: true},
-            'get': { method: 'GET'}
+            'query': { method: 'GET', isArray: true },
+            'get': { method: 'GET' }
         });
+
     }]);
 
 bikeRentalServiceManagerApp.factory('Bike', ['$resource',
@@ -132,3 +133,15 @@ bikeRentalServiceManagerApp.factory('Bike', ['$resource',
             'get': { method: 'GET'}
         });
     }]);
+//
+//bikeRentalServiceManagerApp.factory('DemoService', ['$http',
+//    function($http) {
+//        return {
+//            get: function() {
+//                var promise = $http.get('app/rest/bikestations')
+//                .success(function (response) {
+//                        return response.data;
+//                    });
+//            }
+//        }
+//    }]);

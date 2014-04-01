@@ -33,7 +33,11 @@ bikeRentalServiceManagerApp.controller('LoginController', ['$scope', '$location'
                     $location.path('');
                 }
             })
-        }
+        };
+
+        $scope.toSignup = function() {
+            $location.path('/signup');
+        };
     }]);
 
 bikeRentalServiceManagerApp.controller('LogoutController', ['$location', 'AuthenticationSharedService',
@@ -285,7 +289,7 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
         $scope.delete = function (id) {
             BikeStation.delete({id: id},
                 function () {
-                    $scope.bikestations = BikeStation.query();
+                    $scope.bikestations = BikeStation.my.query();
                 });
         };
 
@@ -356,3 +360,68 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         };
 
     }]);
+
+bikeRentalServiceManagerApp.controller('SignupController', ['$scope', function($scope) {
+    // TODO: signup here!
+}]);
+
+bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location', 'BikeStation', 'resolvedBikeStation', function ($scope, $location, BikeStation, resolvedBikeStation) {
+
+    $scope.bikestations = resolvedBikeStation;
+
+    $scope.showMap = true;
+
+    // center map on aachen, zoomed in
+    $scope.map = {
+        center: {
+            latitude: 50.776667,
+            longitude: 6.083611
+        },
+        zoom: 14
+    };
+
+    $scope.getCoordinates = function() {
+//        $scope.geocoder = new google.maps.Geocoder();
+//
+//
+//        for (var i = 0; i < $scope.bikestations.length; i++) {
+//            var station = $scope.bikestations[i];
+//            var address = station.addressStreet + ', ' + station.addressCity;
+//            console.log(address);
+//
+//
+//            $scope.geocoder.geocode({'address': address},
+//                function(results, status) {
+//                    if (status == google.maps.GeocoderStatus.OK) {
+//                        var newMarker = new google.maps.Marker(
+//                            {
+//                                map: $scope.map,
+//                                position: results[0].geometry.location
+//                            }
+//                        );
+//                    } else {
+//                        console.log("Geocode for " + addressString + " was unsuccessful!");
+//                    }
+//                });
+//
+//        }
+
+    }
+
+    $scope.gotoDetails = function (bikeStationId) {
+        $location.path('/bikestations/'+bikeStationId);
+    }
+
+    $scope.toggleMap = function () {
+        $scope.showMap = !$scope.showMap;
+    }
+
+}]);
+
+/*
+bikeRentalServiceManagerApp.controller('MapController', ['$scope', 'BikeStation', 'resolvedBikeStation', function ($scope, $BikeStation, resolvedBikeStation) {
+
+    $scope.bikestations = resolvedBikeStation;
+
+}]);
+*/

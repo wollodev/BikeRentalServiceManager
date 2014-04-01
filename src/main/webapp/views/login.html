@@ -22,7 +22,10 @@
                     <input type="checkbox" class="form-control" id="rememberMe"
                            ng-model="rememberMe" checked>
                 </div>
-                <button type="submit" class="btn btn-primary" ng-click="login()" translate="login.form.button">Authenticate</button>
+                <div>
+                    <button type="submit" class="btn btn-primary" ng-click="login()" translate="login.form.button">Authenticate</button>
+                    <button class="btn btn-link" ng-click="toSignup()">Sign up</button>
+                </div>
             </form>
         </div>
         <div class="col-md-4"></div>

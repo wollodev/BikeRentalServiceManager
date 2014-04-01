@@ -14,6 +14,7 @@
                 "logs": "Logs",
                 "audits": "Audits",
                 "login": "Authenticate",
+                "signup": "Sign up",
                 "logout": "Log out"
             },
             "admin": "Administration",
@@ -56,6 +57,22 @@
             "error": {
                 "authentication": "<strong>Authentication failed!</strong> Please check your credentials and try again."
             }
+        }
+    },
+    "signup": {
+        "title": "Sign up",
+        "form": {
+            "username": "Login",
+            "username.placeholder": "Your Login",
+            "password": "Password",
+            "password.placeholder": "Your password",
+            "repeatpassword": "Repeat Password",
+            "repeatpassword.placeholder": "Your password",
+            "button": "Sign up",
+            "firstname": "First Name",
+            "firstname.placeholder": "Your First Name",
+            "lastname": "Last Name",
+            "lastname.placeholder": "Your Last Name"
         }
     },
     "settings": {

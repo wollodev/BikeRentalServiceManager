@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -47,6 +48,10 @@ public class BikeStation implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "bikeStation", orphanRemoval = true)
     @JsonManagedReference
     private Set<Bike> bikes;
+
+    //
+    @Formula("(SELECT count(*) FROM t_bike AS b WHERE b.bike_station_id = id AND b.is_rented = 'false')")
+    private int numberOfAvailableBikes;
 
     @PreRemove
     public void onDelete() {
@@ -140,6 +145,7 @@ public class BikeStation implements Serializable {
         this.numberPorts = numberPorts;
     }
 
+    public int getNumberOfAvailableBikes() { return numberOfAvailableBikes; }
 
     public Set<Bike> getBikes() {
         return bikes;

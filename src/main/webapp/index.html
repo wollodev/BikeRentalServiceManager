@@ -36,7 +36,7 @@
                             <span>
                                 <span class="glyphicon glyphicon-user"></span>
                                 <span class="hidden-tablet" translate="global.menu.account.main">
-                                    Account
+                                    Account: {{ account.login }}
                                 </span>
                                 <b class="caret"></b>
                             </span>
@@ -52,10 +52,28 @@
                                 &nbsp;<span translate="global.menu.account.logout">Log out</span></a></li>
                             <li ng-switch-when="false"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>
                                 &nbsp;<span translate="global.menu.account.login">Authenticate</span></a></li>
+                            <li ng-switch-when="false"><a href="#/signup"><span class="glyphicon glyphicon-log-in"></span>
+                                &nbsp;<span translate="global.menu.account.signup">Sign up</span></a></li>
                         </ul>
                     </li>
 
-                    <li ng-switch-when="true" ng-show="hasRole('ROLE_ADMIN')" class="dropdown pointer" ng-controller="AdminController">
+                    <li class="dropdown pointer">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <span>
+                                <span class="glyphicon glyphicon-record"></span>
+                                <span class="hidden-tablet" translate="global.menu.bikestation.demo">
+                                    Demo
+                                </span>
+                                <b class="caret"></b>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/demo"><span class="glyphicon glyphicon-wrench"></span>
+                                &nbsp;<span translate="global.menu.bikestation.bikestationdemo">Bike Station Demo</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li ng-switch-when="true" ng-show="hasRole('ROLE_LENDER')" class="dropdown pointer" ng-controller="AdminController">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <span>
                                 <span class="glyphicon glyphicon-record"></span>
@@ -165,6 +183,9 @@
         <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/tab.js"></script>
         <script src="bower_components/ladda/dist/spin.min.js"></script>
         <script src="bower_components/ladda/dist/ladda.min.js"></script>
+        <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+        <script src='/bower_components/underscore/underscore.js'></script>
+        <script src='/bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
         <!-- endbuild -->
 </body>
 </html>

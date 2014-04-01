@@ -3,6 +3,7 @@ package de.rwth.idsg.brsm.repository;
 import de.rwth.idsg.brsm.domain.BikeStation;
 import de.rwth.idsg.brsm.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

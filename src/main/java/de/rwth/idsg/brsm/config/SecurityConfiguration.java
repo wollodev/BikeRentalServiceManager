@@ -110,10 +110,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
             .authorizeRequests()
                 .antMatchers("/app/rest/authenticate").permitAll()
-                .antMatchers("/app/rest/bikestations*").hasAuthority(AuthoritiesConstants.LENDER)
-                .antMatchers("/app/rest/bikestations/**").hasAuthority(AuthoritiesConstants.LENDER)
+                //.antMatchers("/app/rest/bikestations*").hasAuthority(AuthoritiesConstants.LENDER) //LENDER
+                //.antMatchers("/app/rest/bikestations/**").hasAuthority(AuthoritiesConstants.LENDER)
                 .antMatchers("/app/rest/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/app/**").authenticated()
+//                .antMatchers("/app/**").authenticated()
                 .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/websocket/**").permitAll()
                 .antMatchers("/metrics*").hasAuthority(AuthoritiesConstants.ADMIN)
