@@ -114,6 +114,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/app/rest/bikestations/**").hasAuthority(AuthoritiesConstants.LENDER)
                 .antMatchers("/app/rest/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
 //                .antMatchers("/app/**").authenticated()
+                // TODO: CHANGE BACK LATER!
+                .antMatchers("app/rest/**").permitAll()
                 .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/websocket/**").permitAll()
                 .antMatchers("/metrics*").hasAuthority(AuthoritiesConstants.ADMIN)

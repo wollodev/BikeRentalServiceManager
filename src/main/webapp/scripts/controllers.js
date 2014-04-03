@@ -361,8 +361,12 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
 
     }]);
 
-bikeRentalServiceManagerApp.controller('SignupController', ['$scope', function($scope) {
-    // TODO: signup here!
+bikeRentalServiceManagerApp.controller('SignupController', ['$scope', 'User', '$http', function($scope, User, $http) {
+    $scope.createUser = function() {
+        // post the new user to the server, fix user role assignment?
+        $scope.signup.user.roles = {"ROLE_USER": true};
+        User.save($scope.signup.user);
+    }
 }]);
 
 bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location', 'BikeStation', 'resolvedBikeStation', function ($scope, $location, BikeStation, resolvedBikeStation) {

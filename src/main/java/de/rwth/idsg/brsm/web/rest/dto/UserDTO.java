@@ -1,8 +1,13 @@
 package de.rwth.idsg.brsm.web.rest.dto;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
 public class UserDTO {
+
+    private final Logger log = LoggerFactory.getLogger(UserDTO.class);
 
     private String login;
     
@@ -11,6 +16,7 @@ public class UserDTO {
     private String lastName;
     
     private String email;
+
 
     private Map<String, Boolean> roles;
 
@@ -22,6 +28,8 @@ public class UserDTO {
         this.lastName = lastName;
         this.email = email;
         this.roles = roles;
+
+        log.info("Created user dto: {}", this);
     }
 
     public String getLogin() {
@@ -43,6 +51,7 @@ public class UserDTO {
     public Map<String, Boolean> getRoles() {
         return roles;
     }
+
 
     public void setLogin(String login) {
         this.login = login;

@@ -5,9 +5,12 @@ import de.rwth.idsg.brsm.domain.User;
 import de.rwth.idsg.brsm.repository.PersistentTokenRepository;
 import de.rwth.idsg.brsm.repository.UserRepository;
 import de.rwth.idsg.brsm.security.SecurityUtils;
+import de.rwth.idsg.brsm.web.rest.dto.UserDTO;
+import de.rwth.idsg.brsm.web.rest.dto.UserRegistrationDTO;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,25 @@ public class UserService {
     @Inject
     private PersistentTokenRepository persistentTokenRepository;
 
+//    public boolean checkForUser() {
+//        log.info("CHECKING FOR USER");
+//
+//        User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());
+//        if (currentUser == nil)
+//    }
+
+    public void createUser(UserRegistrationDTO user) {
+        User newUser = new User();
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setLogin(user.getLogin());
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        newUser.setPassword(encryptedPassword);
+        userRepository.save(newUser);
+
+        log.debug("Created new user {}", newUser);
+    }
+
     public void updateUserInformation(String firstName, String lastName, String email) {
         User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());
         currentUser.setFirstName(firstName);
@@ -56,6 +78,12 @@ public class UserService {
         User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());
         currentUser.getAuthorities().size(); // eagerly load the association
         return currentUser;
+    }
+
+    public void deleteUser(String login) {
+        User target = userRepository.findOne(login);
+        userRepository.delete(target);
+        log.debug("Deleted User: {}", login);
     }
 
     /**
