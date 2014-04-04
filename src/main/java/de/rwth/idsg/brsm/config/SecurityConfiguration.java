@@ -1,6 +1,5 @@
 package de.rwth.idsg.brsm.config;
 
-import de.rwth.idsg.brsm.config.reload.condition.ConditionalOnSpringLoaded;
 import de.rwth.idsg.brsm.security.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -48,4 +48,3 @@ public class LocaleConfiguration extends WebMvcConfigurerAdapter implements Envi
     }
 }
 
-

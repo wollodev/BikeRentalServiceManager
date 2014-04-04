@@ -1,22 +1,20 @@
 package de.rwth.idsg.brsm.web.rest.dto;
 
-import java.util.Map;
+import java.util.List;
 
 public class UserDTO {
 
-    private String login;
+    private final String login;
     
-    private String firstName;
+    private final String firstName;
     
-    private String lastName;
+    private final String lastName;
     
-    private String email;
+    private final String email;
 
-    private Map<String, Boolean> roles;
+    private final List<String> roles;
 
-    public UserDTO() {}
-
-    public UserDTO(String login, String firstName, String lastName, String email, Map<String, Boolean> roles) {
+    public UserDTO(String login, String firstName, String lastName, String email, List<String> roles) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,37 +38,19 @@ public class UserDTO {
         return email;
     }
 
-    public Map<String, Boolean> getRoles() {
+    public List<String> getRoles() {
         return roles;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setRoles(Map<String, Boolean> roles) {
-        this.roles = roles;
     }
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-                "email='" + email + '\'' +
-                ", login='" + login + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder("UserDTO{");
+        sb.append("login='").append(login).append('\'');
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", roles=").append(roles);
+        sb.append('}');
+        return sb.toString();
     }
 }
