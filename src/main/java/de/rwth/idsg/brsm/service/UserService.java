@@ -1,9 +1,12 @@
 package de.rwth.idsg.brsm.service;
 
+import de.rwth.idsg.brsm.domain.Authority;
 import de.rwth.idsg.brsm.domain.PersistentToken;
 import de.rwth.idsg.brsm.domain.User;
+import de.rwth.idsg.brsm.repository.AuthorityRepository;
 import de.rwth.idsg.brsm.repository.PersistentTokenRepository;
 import de.rwth.idsg.brsm.repository.UserRepository;
+import de.rwth.idsg.brsm.security.AuthoritiesConstants;
 import de.rwth.idsg.brsm.security.SecurityUtils;
 import de.rwth.idsg.brsm.web.rest.dto.UserDTO;
 import de.rwth.idsg.brsm.web.rest.dto.UserRegistrationDTO;
@@ -18,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Service class for managing users.
@@ -35,6 +40,9 @@ public class UserService {
     private UserRepository userRepository;
 
     @Inject
+    private AuthorityRepository authorityRepository;
+
+    @Inject
     private PersistentTokenRepository persistentTokenRepository;
 
 //    public boolean checkForUser() {
@@ -48,7 +56,8 @@ public class UserService {
         User newUser = new User();
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
-        newUser.setLogin(user.getLogin());
+        newUser.setLogin(user.getLogin().toLowerCase());
+        newUser.setEmail(user.getEmail());
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         newUser.setPassword(encryptedPassword);
         userRepository.save(newUser);
