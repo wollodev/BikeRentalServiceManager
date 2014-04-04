@@ -361,18 +361,35 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
 
     }]);
 
-bikeRentalServiceManagerApp.controller('SignupController', ['$scope', '$location', 'User', '$http', function($scope, $location, User, $http) {
+bikeRentalServiceManagerApp.controller('SignupController', ['$scope', '$location', 'User', '$timeout', function($scope, $location, User, $timeout) {
+
+    $scope.signUpError = false;
+    $scope.signUpSuccess = false;
+
     $scope.createUser = function() {
         // post the new user to the server, fix user role assignment?
         $scope.signup.user.roles = {"ROLE_USER": true};
-        User.save($scope.signup.user);
-        $location.path('/login');
+
+        // save new user and redirect to login page after (delay)
+        User.save($scope.signup.user,
+            function() {
+                $scope.signUpSuccess = true;
+                $timeout(function() {
+                    $location.path('/login');
+                }, 1000);
+        }, function() {
+                $scope.signUpError = true;
+                console.log("Error handler");
+        });
     }
+
 }]);
 
-bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location', 'BikeStation', 'resolvedBikeStation', function ($scope, $location, BikeStation, resolvedBikeStation) {
+bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location', '$http',  function ($scope, $location, $http) { //BikeStation, resolvedBikeStation, $http) {
 
-    $scope.bikestations = resolvedBikeStation;
+//    $scope.bikestations = resolvedBikeStation;
+
+    $scope.mapMarkers = new Array();
 
     $scope.showMap = true;
 
@@ -385,32 +402,73 @@ bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location',
         zoom: 14
     };
 
+    function getMapObject() {
+        $scope.map.control.getGMap();
+    }
+
+    var promise = $http.get('/app/rest/allbikestations');
+
+    promise.success(function(data, status, headers, config) {
+        $scope.geocoder = new google.maps.Geocoder();
+
+        var map = $scope.map.getGMap();
+
+        $scope.bikestations = data;
+
+        for (var i = 0; i < $scope.bikestations.length; i++) {
+            var station = $scope.bikestations[i];
+            var address = station.addressStreet + ', ' + station.addressCity;
+
+            $scope.geocoder.geocode({'address': address},
+                function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        console.log(results[0].geometry.location);
+                        var newMarker = new google.maps.Marker(
+                            {
+                                map: map,
+                                position: results[0].geometry.location
+                            }
+                        );
+                    } else {
+                        console.log("Geocode for " + addressString + " was unsuccessful!");
+                    }
+                });
+        }
+    }).error(function(data, status) {
+        console.log(status);
+    });
+
+
+
     $scope.getCoordinates = function() {
-//        $scope.geocoder = new google.maps.Geocoder();
-//
-//
-//        for (var i = 0; i < $scope.bikestations.length; i++) {
-//            var station = $scope.bikestations[i];
-//            var address = station.addressStreet + ', ' + station.addressCity;
+        $scope.geocoder = new google.maps.Geocoder();
+
+
+
+        for (var i = 0; i < $scope.bikestations.length; i++) {
+            var station = $scope.bikestations[i];
+            var address = station.addressStreet + ', ' + station.addressCity;
 //            console.log(address);
-//
-//
-//            $scope.geocoder.geocode({'address': address},
-//                function(results, status) {
-//                    if (status == google.maps.GeocoderStatus.OK) {
+
+            $scope.geocoder.geocode({'address': address},
+                function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
 //                        var newMarker = new google.maps.Marker(
 //                            {
-//                                map: $scope.map,
+////                                map: $scope.map,
 //                                position: results[0].geometry.location
 //                            }
 //                        );
-//                    } else {
-//                        console.log("Geocode for " + addressString + " was unsuccessful!");
-//                    }
-//                });
-//
-//        }
+//                        $scope.mapMarkers.put(newMarker);
 
+//                        console.log(results[0]);
+                        console.log(results[0].geometry.location);
+                        $scope.mapMarkers[i] = results[0].geometry.location;
+                    } else {
+                        console.log("Geocode for " + addressString + " was unsuccessful!");
+                    }
+                });
+        }
     }
 
     $scope.gotoDetails = function (bikeStationId) {

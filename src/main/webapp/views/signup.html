@@ -4,32 +4,35 @@
         <div class="col-md-4">
             <h1 translate="signup.title">Sign up</h1>
 
-            <!--<div class="alert alert-danger" ng-show="authenticationError" translate="login.messages.error.authentication">-->
-                <!--<strong>Authentication failed!</strong> Please check your credentials and try again.-->
-            <!--</div>-->
+            <div class="alert alert-danger" ng-show="signUpError" translate="signup.messages.error.authentication">
+                <strong>Sign up failed!</strong> Please check your credentials and try again.
+            </div>
+            <div class="alert alert-success" ng-show="signUpSuccess" translate="signup.messages.success.authentication">
+                <strong>Sign up successful!</strong> Redirecting to login.
+            </div>
             <form class="form" role="form" name="form" ng-submit="createUser()">
                 <div class="form-group">
                     <label for="username" translate="signup.form.username">Login</label>
-                    <input type="text" class="form-control" id="username" placeholder="{{'signup.form.username.placeholder' | translate}}" ng-model="signup.user.login">
+                    <input type="text" class="form-control" id="username" placeholder="{{'signup.form.username.placeholder' | translate}}" ng-model="signup.user.login" required="true">
                 </div>
                 <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="{{'signup.form.firstname.placeholder' | translate}}" ng-model="signup.user.firstName">
+                    <input type="text" class="form-control" id="firstName" placeholder="{{'signup.form.firstname.placeholder' | translate}}" ng-model="signup.user.firstName" required="true">
 
                     <label>Last Name</label>
-                    <input type="text" class="form-control" id="lastName" placeholder="{{'signup.form.lastname.placeholder' | translate}}" ng-model="signup.user.lastName">
+                    <input type="text" class="form-control" id="lastName" placeholder="{{'signup.form.lastname.placeholder' | translate}}" ng-model="signup.user.lastName" required="true">
                 </div>
                 <div class="form-group">
                     <label>E-Mail</label>
-                    <input type="text" class="form-control" id="email" placeholder="{{'signup.form.email.placeholder' | translate}}" ng-model="signup.user.email">
+                    <input type="text" class="form-control" id="email" placeholder="{{'signup.form.email.placeholder' | translate}}" ng-model="signup.user.email" required="true">
                 </div>
                 <div class="form-group">
                     <label for="password" translate="signup.form.password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="{{'signup.form.password.placeholder' | translate}}"
-                           data-match="signup.repeatPassword" ng-model="signup.user.password" ng-minlength="3">
+                           data-match="signup.repeatPassword" ng-model="signup.user.password" ng-minlength="3" required="true">
                     <label for="password" translate="signup.form.repeatPassword">Repeat Password</label>
                     <input type="password" class="form-control" id="repeatpassword" name="repeatpassword" placeholder="{{'signup.form.password.placeholder' | translate}}"
-                           data-match="signup.user.password" ng-model="signup.repeatPassword">
+                           data-match="signup.user.password" ng-model="signup.repeatPassword" required="true">
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary" translate="signup.form.button">Sign up</button>

@@ -65,6 +65,17 @@ public class BikeStationResource {
         bikestationRepository.save(bikeStation);
     }
 
+    @RolesAllowed(AuthoritiesConstants.ANONYMOUS)
+    @RequestMapping(value = "/rest/allbikestations",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    @Timed
+    public List<BikeStation> getStations() {
+        log.debug("REST request to get all BikeStations");
+
+        return bikestationRepository.findAll();
+    }
+
     /**
      * GET  /rest/bikestations -> get all the bikestations.
      */
@@ -83,17 +94,6 @@ public class BikeStationResource {
         User currentUser = userService.getUserWithAuthorities();
 
         return bikestationRepository.findByUser(currentUser);
-    }
-
-    @RolesAllowed(AuthoritiesConstants.USER) // was LENDER
-    @RequestMapping(value = "/rest/allbikestations",
-            method = RequestMethod.GET,
-            produces = "application/json")
-    @Timed
-    public List<BikeStation> getAllStations() {
-        log.debug("REST request to get all BikeStations");
-
-        return bikestationRepository.findAll();
     }
 
     /**

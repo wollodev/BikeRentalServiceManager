@@ -22,7 +22,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="development"></div>
-        <div class="container">
+        <div class="container"  ng-cloak>
             <div class="header" ng-switch="authenticated">
                 <ul class="nav nav-pills pull-right">
                     <li>
@@ -35,7 +35,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <span>
                                 <span class="glyphicon glyphicon-user"></span>
-                                <span class="hidden-tablet" translate="global.menu.account.main">
+                                <span class="hidden-tablet" ng-cloak>  <!-- translate="global.menu.account.main"> -->
                                     Account: {{ account.login }}
                                 </span>
                                 <b class="caret"></b>

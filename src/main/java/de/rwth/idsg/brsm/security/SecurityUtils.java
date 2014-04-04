@@ -1,5 +1,7 @@
 package de.rwth.idsg.brsm.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +13,8 @@ import java.util.Collection;
  * Utility class for Spring Security.
  */
 public final class SecurityUtils {
+
+    private static final Logger log = LoggerFactory.getLogger(SecurityUtils.class);
 
     private SecurityUtils() {
     }

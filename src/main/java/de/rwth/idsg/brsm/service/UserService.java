@@ -62,6 +62,20 @@ public class UserService {
         newUser.setPassword(encryptedPassword);
         userRepository.save(newUser);
 
+//        log.info(user.getRoles().entrySet().toArray().toString());
+        List<Authority> authorities;
+
+        Map<String, Boolean> roles = user.getRoles();
+        Object keys[] = roles.keySet().toArray();
+        for (int i = 0; i < roles.size(); i++) {
+            log.info((String) keys[i]);
+            Authority authority = new Authority();
+//            authority.set;
+//            log.info(auth.toString());
+        }
+//        authorities.add()
+//        authorityRepository.save();
+
         log.debug("Created new user {}", newUser);
     }
 
@@ -85,7 +99,9 @@ public class UserService {
     @Transactional(readOnly = true)
     public User getUserWithAuthorities() {
         User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());
-        currentUser.getAuthorities().size(); // eagerly load the association
+        // avoid NullPointerException if user not logged in!
+        if (currentUser != null)
+            currentUser.getAuthorities().size(); // eagerly load the association
         return currentUser;
     }
 

@@ -1,14 +1,18 @@
 <div>
     <h2>BikeStations</h2>
 
-    <google-map center="map.center" zoom="map.zoom" ng-show="showMap"
+    <google-map center="map.center" zoom="map.zoom" ng-show="showMap" id="map" control="map"
             draggable="true">
         <!-- click='{expression}'
         options='{expression}'
         events='{expression}' -->
-        <marker coords="{'latitude':50.776667, 'longitude':6.083611 + (item.id - 1) / 100}" ng-repeat="item in bikestations">
-        </marker>
+        <!--<marker coords="{'latitude':50.776667, 'longitude':6.083611 + (item.id - 1) / 100}" ng-repeat="item in bikestations">-->
+        <!--<marker coords="{'latitude':item.A, 'longitude':item.k}" ng-repeat="item in mapMarkers">-->
+        <!--</marker>-->
     </google-map>
+    <div>
+        <p ng-repeat="item in mapMarkers" ng-cloak>{{item}}</p>
+    </div>
 
     <div>
         <button class="btn btn-primary btn-sm" ng-click="toggleMap()">
@@ -16,7 +20,7 @@
             <span ng-if="showMap">Hide Map</span>
         </button>
 
-        <!-- <button ng-click="getCoordinates()">Markers</button> -->
+         <button ng-click="getCoordinates()">Markers</button>
 
     </div>
 

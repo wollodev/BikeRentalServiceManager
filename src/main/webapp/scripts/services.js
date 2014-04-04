@@ -139,15 +139,13 @@ bikeRentalServiceManagerApp.factory('Bike', ['$resource',
             'get': { method: 'GET'}
         });
     }]);
-//
-//bikeRentalServiceManagerApp.factory('DemoService', ['$http',
-//    function($http) {
-//        return {
-//            get: function() {
-//                var promise = $http.get('app/rest/bikestations')
-//                .success(function (response) {
-//                        return response.data;
-//                    });
-//            }
-//        }
-//    }]);
+
+bikeRentalServiceManagerApp.factory('MarkerService', ['$http',
+    function($http) {
+        return {
+            get: function(addresses) {
+                var promise = $scope.geocoder.geocode({}, {});
+                return promise;
+            }
+        }
+    }]);

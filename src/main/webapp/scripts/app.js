@@ -125,9 +125,9 @@ bikeRentalServiceManagerApp
 
             $rootScope.$on("$routeChangeStart", function(event, next, current) {
                 // Check if the status of the user. Is it authenticated or not?
-//                if ($location.path() == "/bikestations" || $location.path() == "/demo") {
-//                    return;
-//                }
+                if ($location.path() == "/bikestations" || $location.path() == "/demo") {
+                    return;
+                }
 
                 AuthenticationSharedService.authenticate().then(function(response) {
                     if (response.data == '') {
