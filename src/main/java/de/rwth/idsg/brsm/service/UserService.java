@@ -8,18 +8,17 @@ import de.rwth.idsg.brsm.repository.PersistentTokenRepository;
 import de.rwth.idsg.brsm.repository.UserRepository;
 import de.rwth.idsg.brsm.security.AuthoritiesConstants;
 import de.rwth.idsg.brsm.security.SecurityUtils;
-import de.rwth.idsg.brsm.web.rest.dto.UserDTO;
 import de.rwth.idsg.brsm.web.rest.dto.UserRegistrationDTO;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,21 +59,16 @@ public class UserService {
         newUser.setEmail(user.getEmail());
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         newUser.setPassword(encryptedPassword);
+
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+
+        Set authoritySet = new HashSet();
+
+        authoritySet.add(authority);
+
+        newUser.setAuthorities(authoritySet);
+
         userRepository.save(newUser);
-
-//        log.info(user.getRoles().entrySet().toArray().toString());
-        List<Authority> authorities;
-
-        Map<String, Boolean> roles = user.getRoles();
-        Object keys[] = roles.keySet().toArray();
-        for (int i = 0; i < roles.size(); i++) {
-            log.info((String) keys[i]);
-            Authority authority = new Authority();
-//            authority.set;
-//            log.info(auth.toString());
-        }
-//        authorities.add()
-//        authorityRepository.save();
 
         log.debug("Created new user {}", newUser);
     }

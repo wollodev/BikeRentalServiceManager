@@ -47,7 +47,7 @@ public class User implements Serializable {
     private Set<BikeStation> bikeStations;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "T_USER_AUTHORITY",
             joinColumns = {@JoinColumn(name = "login", referencedColumnName = "login")},
