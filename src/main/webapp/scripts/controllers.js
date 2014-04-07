@@ -430,46 +430,13 @@ bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location',
                             }
                         );
                     } else {
-                        console.log("Geocode for " + addressString + " was unsuccessful!");
+                        console.log("Geocode for " + addressString + " was unsuccessful! ()" + status);
                     }
                 });
         }
     }).error(function(data, status) {
         console.log(status);
     });
-
-
-
-    $scope.getCoordinates = function() {
-        $scope.geocoder = new google.maps.Geocoder();
-
-
-
-        for (var i = 0; i < $scope.bikestations.length; i++) {
-            var station = $scope.bikestations[i];
-            var address = station.addressStreet + ', ' + station.addressCity;
-//            console.log(address);
-
-            $scope.geocoder.geocode({'address': address},
-                function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-//                        var newMarker = new google.maps.Marker(
-//                            {
-////                                map: $scope.map,
-//                                position: results[0].geometry.location
-//                            }
-//                        );
-//                        $scope.mapMarkers.put(newMarker);
-
-//                        console.log(results[0]);
-                        console.log(results[0].geometry.location);
-                        $scope.mapMarkers[i] = results[0].geometry.location;
-                    } else {
-                        console.log("Geocode for " + addressString + " was unsuccessful!");
-                    }
-                });
-        }
-    }
 
     $scope.gotoDetails = function (bikeStationId) {
         $location.path('/bikestations/'+bikeStationId);

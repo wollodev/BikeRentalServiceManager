@@ -65,7 +65,7 @@ public class BikeStationResource {
         bikestationRepository.save(bikeStation);
     }
 
-    @RolesAllowed(AuthoritiesConstants.ANONYMOUS)
+    @RolesAllowed({AuthoritiesConstants.ANONYMOUS, AuthoritiesConstants.USER})
     @RequestMapping(value = "/rest/allbikestations",
             method = RequestMethod.GET,
             produces = "application/json")
