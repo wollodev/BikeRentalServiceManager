@@ -3,7 +3,7 @@
 /* App Module */
 
 var bikeRentalServiceManagerApp = angular.module('bikeRentalServiceManagerApp', ['http-auth-interceptor', 'tmh.dynamicLocale',
-    'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate']);
+    'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate', 'google-maps']);
 
 bikeRentalServiceManagerApp
     .config(['$routeProvider', '$httpProvider', '$translateProvider',  'tmhDynamicLocaleProvider', 'USER_ROLES',
@@ -12,6 +12,13 @@ bikeRentalServiceManagerApp
                 .when('/login', {
                     templateUrl: 'views/login.html',
                     controller: 'LoginController',
+                    access: {
+                        authorizedRoles: [USER_ROLES.all]
+                    }
+                })
+                .when('/signup', {
+                    templateUrl: 'views/signup.html',
+                    controller: 'SignupController',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
@@ -107,6 +114,18 @@ bikeRentalServiceManagerApp
                         resolvedBike: ['Bike', function (Bike) {
                             console.log(Bike.query());
                             return Bike.query();
+                        }]
+                    },
+                    access: {
+                        authorizedRoles: [USER_ROLES.all]
+                    }
+                })
+                .when('/demo', {
+                    templateUrl: 'views/demo.html',
+                    controller: 'DemoController',
+                    resolve: {
+                        resolvedBikeStation: ['BikeStation', function (BikeStation) {
+                            return BikeStation.query();
                         }]
                     },
                     access: {

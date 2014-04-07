@@ -1,6 +1,7 @@
 package de.rwth.idsg.brsm.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import de.rwth.idsg.brsm.domain.Authority;
 import de.rwth.idsg.brsm.domain.Bike;
 import de.rwth.idsg.brsm.domain.BikeStation;
 import de.rwth.idsg.brsm.domain.User;
@@ -36,6 +37,8 @@ public class BikeStationResource {
     /**
      * POST  /rest/bikestations -> Create a new bikestation.
      */
+    // ATTENTION: changed to make station creation work again (max@25.03.14)
+    @RolesAllowed(AuthoritiesConstants.LENDER) // was LENDER
     @RequestMapping(value = "/rest/bikestations",
             method = RequestMethod.POST,
             produces = "application/json")
@@ -50,6 +53,7 @@ public class BikeStationResource {
     /**
      * POST  /rest/bikestations/{id}/addBike -> Create add new bike to bikestation.
      */
+    @RolesAllowed(AuthoritiesConstants.LENDER) // was LENDER
     @RequestMapping(value = "/rest/bikestations/{id}/addBike",
             method = RequestMethod.POST,
             produces = "application/json")
@@ -61,10 +65,21 @@ public class BikeStationResource {
         bikestationRepository.save(bikeStation);
     }
 
+    @RolesAllowed({AuthoritiesConstants.ANONYMOUS, AuthoritiesConstants.USER})
+    @RequestMapping(value = "/rest/allbikestations",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    @Timed
+    public List<BikeStation> getStations() {
+        log.debug("REST request to get all BikeStations");
+
+        return bikestationRepository.findAll();
+    }
+
     /**
      * GET  /rest/bikestations -> get all the bikestations.
      */
-    @RolesAllowed(AuthoritiesConstants.LENDER)
+    @RolesAllowed({AuthoritiesConstants.ANONYMOUS, AuthoritiesConstants.USER}) // was LENDER
     @RequestMapping(value = "/rest/bikestations",
             method = RequestMethod.GET,
             produces = "application/json")
@@ -84,7 +99,7 @@ public class BikeStationResource {
     /**
      * GET  /rest/bikestations/:id -> get the "id" bikestation.
      */
-    @RolesAllowed(AuthoritiesConstants.LENDER)
+    @RolesAllowed(AuthoritiesConstants.LENDER) // was LENDER
     @RequestMapping(value = "/rest/bikestations/{id}",
             method = RequestMethod.GET,
             produces = "application/json")

@@ -285,7 +285,7 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
         $scope.delete = function (id) {
             BikeStation.delete({id: id},
                 function () {
-                    $scope.bikestations = BikeStation.query();
+                    $scope.bikestations = BikeStation.my.query();
                 });
         };
 
@@ -356,3 +356,98 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         };
 
     }]);
+
+bikeRentalServiceManagerApp.controller('SignupController', ['$scope', '$location', 'User', '$timeout', function($scope, $location, User, $timeout) {
+
+    $scope.signUpError = false;
+    $scope.signUpSuccess = false;
+
+    $scope.createUser = function() {
+        // post the new user to the server, fix user role assignment?
+        $scope.signup.user.roles = ["ROLE_USER"];
+
+        // save new user and redirect to login page after (delay)
+        User.save($scope.signup.user,
+            function() {
+                $scope.signUpSuccess = true;
+                $timeout(function() {
+                    $location.path('/login');
+                }, 1000);
+            }, function() {
+                $scope.signUpError = true;
+                console.log("Error handler");
+            });
+    }
+
+}]);
+
+bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location', '$http',  function ($scope, $location, $http) { //BikeStation, resolvedBikeStation, $http) {
+
+//    $scope.bikestations = resolvedBikeStation;
+
+    $scope.mapMarkers = new Array();
+
+    $scope.showMap = true;
+
+    // center map on aachen, zoomed in
+    $scope.map = {
+        center: {
+            latitude: 50.776667,
+            longitude: 6.083611
+        },
+        zoom: 14
+    };
+
+    function getMapObject() {
+        $scope.map.control.getGMap();
+    }
+
+    var promise = $http.get('/app/rest/allbikestations');
+
+    promise.success(function(data, status, headers, config) {
+        $scope.geocoder = new google.maps.Geocoder();
+
+        var map = $scope.map.getGMap();
+
+        $scope.bikestations = data;
+
+        for (var i = 0; i < $scope.bikestations.length; i++) {
+            var station = $scope.bikestations[i];
+            var address = station.addressStreet + ', ' + station.addressCity;
+
+            $scope.geocoder.geocode({'address': address},
+                function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        console.log(results[0].geometry.location);
+                        var newMarker = new google.maps.Marker(
+                            {
+                                map: map,
+                                position: results[0].geometry.location
+                            }
+                        );
+                    } else {
+                        console.log("Geocode for " + addressString + " was unsuccessful! ()" + status);
+                    }
+                });
+        }
+    }).error(function(data, status) {
+        console.log(status);
+    });
+
+    $scope.gotoDetails = function (bikeStationId) {
+        $location.path('/bikestations/'+bikeStationId);
+    }
+
+    $scope.toggleMap = function () {
+        $scope.showMap = !$scope.showMap;
+    }
+
+}]);
+
+/*
+ bikeRentalServiceManagerApp.controller('MapController', ['$scope', 'BikeStation', 'resolvedBikeStation', function ($scope, $BikeStation, resolvedBikeStation) {
+
+ $scope.bikestations = resolvedBikeStation;
+
+ }]);
+ */

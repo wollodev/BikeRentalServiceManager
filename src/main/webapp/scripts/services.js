@@ -8,6 +8,12 @@ bikeRentalServiceManagerApp.factory('Account', ['$resource',
         });
     }]);
 
+bikeRentalServiceManagerApp.factory('User', ['$resource',
+    function($resource) {
+        return $resource('app/rest/users', {}, {
+        });
+    }])
+
 bikeRentalServiceManagerApp.factory('Password', ['$resource',
     function ($resource) {
         return $resource('app/rest/account/change_password', {}, {
@@ -184,4 +190,14 @@ bikeRentalServiceManagerApp.factory('Bike', ['$resource',
             'query': { method: 'GET', isArray: true},
             'get': { method: 'GET'}
         });
+    }]);
+
+bikeRentalServiceManagerApp.factory('MarkerService', ['$http',
+    function($http) {
+        return {
+            get: function(addresses) {
+                var promise = $scope.geocoder.geocode({}, {});
+                return promise;
+            }
+        }
     }]);

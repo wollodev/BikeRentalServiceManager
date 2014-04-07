@@ -1,10 +1,14 @@
 package de.rwth.idsg.brsm.service;
 
+import de.rwth.idsg.brsm.domain.Authority;
 import de.rwth.idsg.brsm.domain.PersistentToken;
 import de.rwth.idsg.brsm.domain.User;
+import de.rwth.idsg.brsm.repository.AuthorityRepository;
 import de.rwth.idsg.brsm.repository.PersistentTokenRepository;
 import de.rwth.idsg.brsm.repository.UserRepository;
+import de.rwth.idsg.brsm.security.AuthoritiesConstants;
 import de.rwth.idsg.brsm.security.SecurityUtils;
+import de.rwth.idsg.brsm.web.rest.dto.UserRegistrationDTO;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Service class for managing users.
@@ -33,6 +39,37 @@ public class UserService {
 
     @Inject
     private PersistentTokenRepository persistentTokenRepository;
+
+    @Inject
+    private AuthorityRepository authorityRepository;
+
+    public void createUser(UserRegistrationDTO user) {
+        User newUser = new User();
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setLogin(user.getLogin().toLowerCase());
+        newUser.setEmail(user.getEmail());
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        newUser.setPassword(encryptedPassword);
+
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+
+        Set authoritySet = new HashSet();
+
+        authoritySet.add(authority);
+
+        newUser.setAuthorities(authoritySet);
+
+        userRepository.save(newUser);
+
+        log.debug("Created new user {}", newUser);
+    }
+
+    public void deleteUser(String login) {
+        User target = userRepository.findOne(login);
+        userRepository.delete(target);
+        log.debug("Deleted User: {}", login);
+    }
 
     public void updateUserInformation(String firstName, String lastName, String email) {
         User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());

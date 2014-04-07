@@ -4,15 +4,17 @@ import java.util.List;
 
 public class UserDTO {
 
-    private final String login;
-    
-    private final String firstName;
-    
-    private final String lastName;
-    
-    private final String email;
+    private String login;
 
-    private final List<String> roles;
+    private String firstName;
+
+    private String lastName;
+    
+    private String email;
+
+    private List<String> roles;
+
+    public UserDTO() {}
 
     public UserDTO(String login, String firstName, String lastName, String email, List<String> roles) {
         this.login = login;
@@ -40,6 +42,26 @@ public class UserDTO {
 
     public List<String> getRoles() {
         return roles;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     @Override

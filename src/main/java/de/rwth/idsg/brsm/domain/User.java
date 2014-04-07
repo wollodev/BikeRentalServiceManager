@@ -41,13 +41,12 @@ public class User implements Serializable {
     @Size(min = 0, max = 100)
     private String email;
 
-
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private Set<BikeStation> bikeStations;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "T_USER_AUTHORITY",
             joinColumns = {@JoinColumn(name = "login", referencedColumnName = "login")},

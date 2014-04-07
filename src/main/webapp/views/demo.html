@@ -1,0 +1,49 @@
+<div>
+    <h2>BikeStations</h2>
+
+    <google-map center="map.center" zoom="map.zoom" ng-show="showMap" id="map" control="map"
+            draggable="true">
+    </google-map>
+    <div>
+        <p ng-repeat="item in mapMarkers" ng-cloak>{{item}}</p>
+    </div>
+
+    <div>
+        <button class="btn btn-primary btn-sm" ng-click="toggleMap()">
+            <span ng-if="!showMap">Show Map</span>
+            <span ng-if="showMap">Hide Map</span>
+        </button>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Adresse</th>
+                <th>Öffnungszeiten</th>
+                <th>Vorh. Fahrräder</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="bikestation in bikestations">
+                <td>{{bikestation.id}}</td>
+                <td><a href="/#/bikestations/{{bikestation.id}}">{{bikestation.name}}</a></td>
+                <td>{{bikestation.addressStreet + ', ' + bikestation.addressZip + ', ' + bikestation.addressCity}}</td>
+                <td>{{bikestation.openingHours}}</td>
+                <td>{{bikestation.numberOfAvailableBikes}} von {{bikestation.numberOfBikes}}</td>
+                <td>
+                    <button type="submit"
+                            ng-click="gotoDetails(bikestation.id)"
+                            class="btn">
+                        <span class="glyphicon glyphicon-pencil"></span> Details
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
