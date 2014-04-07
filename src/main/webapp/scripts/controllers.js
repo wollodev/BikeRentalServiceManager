@@ -422,11 +422,12 @@ bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location',
             $scope.geocoder.geocode({'address': address},
                 function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
-                        console.log(results[0].geometry.location);
+                        console.log(results[0]);
                         var newMarker = new google.maps.Marker(
                             {
                                 map: map,
-                                position: results[0].geometry.location
+                                position: results[0].geometry.location,
+                                title: results[0].formatted_address
                             }
                         );
                     } else {

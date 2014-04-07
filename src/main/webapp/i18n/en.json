@@ -17,6 +17,13 @@
                 "signup": "Sign up",
                 "logout": "Log out"
             },
+            "bikestation": {
+                "demo": "Demo",
+                "bikestationdemo": "Bike Station Demo",
+                "main": "Main",
+                "bikestation": "Bikestations",
+                "bikes": "Bikes"
+            },
             "admin": "Administration",
             "language": "Language"
         },
@@ -66,13 +73,15 @@
             "username.placeholder": "Your Login",
             "password": "Password",
             "password.placeholder": "Your password",
-            "repeatpassword": "Repeat Password",
-            "repeatpassword.placeholder": "Your password",
+            "repeatPassword": "Repeat Password",
+            "repeatPassword.placeholder": "Your password",
             "button": "Sign up",
             "firstname": "First Name",
             "firstname.placeholder": "Your First Name",
             "lastname": "Last Name",
-            "lastname.placeholder": "Your Last Name"
+            "lastname.placeholder": "Your Last Name",
+            "email": "E-Mail",
+            "email.placeholder": "Your E-Mail"
         }
     },
     "settings": {

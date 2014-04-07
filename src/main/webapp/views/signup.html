@@ -16,14 +16,14 @@
                     <input type="text" class="form-control" id="username" placeholder="{{'signup.form.username.placeholder' | translate}}" ng-model="signup.user.login" required="true">
                 </div>
                 <div class="form-group">
-                    <label>First Name</label>
+                    <label for="firstName" translate="signup.form.firstname">First Name</label>
                     <input type="text" class="form-control" id="firstName" placeholder="{{'signup.form.firstname.placeholder' | translate}}" ng-model="signup.user.firstName" required="true">
 
-                    <label>Last Name</label>
+                    <label for="lastName" translate="signup.form.lastname">Last Name</label>
                     <input type="text" class="form-control" id="lastName" placeholder="{{'signup.form.lastname.placeholder' | translate}}" ng-model="signup.user.lastName" required="true">
                 </div>
                 <div class="form-group">
-                    <label>E-Mail</label>
+                    <label for="email" translate="signup.form.email">E-Mail</label>
                     <input type="text" class="form-control" id="email" placeholder="{{'signup.form.email.placeholder' | translate}}" ng-model="signup.user.email" required="true">
                 </div>
                 <div class="form-group">
@@ -31,7 +31,7 @@
                     <input type="password" class="form-control" id="password" placeholder="{{'signup.form.password.placeholder' | translate}}"
                            data-match="signup.repeatPassword" ng-model="signup.user.password" ng-minlength="3" required="true">
                     <label for="password" translate="signup.form.repeatPassword">Repeat Password</label>
-                    <input type="password" class="form-control" id="repeatpassword" name="repeatpassword" placeholder="{{'signup.form.password.placeholder' | translate}}"
+                    <input type="password" class="form-control" id="repeatpassword" name="repeatpassword" placeholder="{{'signup.form.repeatPassword.placeholder' | translate}}"
                            data-match="signup.user.password" ng-model="signup.repeatPassword" required="true">
                 </div>
                 <div>
