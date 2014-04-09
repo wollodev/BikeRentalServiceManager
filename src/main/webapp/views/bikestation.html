@@ -1,28 +1,19 @@
 <div>
+
     <h2>Bikestation: {{bikestation.name}}</h2>
 
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#saveBikeModal">
-        <span class="glyphicon glyphicon-flash"></span> Create a new Bike
-    </button>
     <div class="modal fade" id="saveBikeModal" tabindex="-1" role="dialog" aria-labelledby="myBikeLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form name="form" role="form" novalidate
-                      class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+                <form name="form" role="form" novalidate class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
                       ng-submit="create()">
-
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                                 ng-click="clear()">&times;</button>
                         <h4 class="modal-title" id="myBikeLabel">Create or edit a Bike</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" name="id"
-                                   ng-model="bike.id" readonly>
-                        </div>
 
                         <div class="form-group">
                             <label>Bike Tag</label>
@@ -35,36 +26,55 @@
                         </button>
                         <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Save</button>
                     </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+
+
+
+
+                    <form name="form" class="form-inline" role="form" novalidate
+                      class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+                      ng-submit="create()">
+
+                        <div class="form-group">
+                            <label class="sr-only" for="bikeTag">Bike Name/Identifier</label>
+                            <input type="text" placeholder="Enter Bike Name or Identifier" class="form-control" name="tag"
+                                   ng-model="bike.tag" id="bikeTag" ng-minlength=1 ng-maxlength=255 required>
+
+                        </div>
+
+                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Add</button>
+
+                </form>
 
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>ID</th>
                 <th>Bike Tag</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="bike in bikestation.bikes">
-                <td>{{bike.id}}</td>
-                <td>{{bike.tag}}</td>
                 <td>
+                    {{bike.tag}}
                     <button type="submit"
                             ng-click="update(bike.id)"
-                            class="btn">
-                        <span class="glyphicon glyphicon-pencil"></span> Edit
+                            class="btn btn-xs">
+                        <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="submit"
                             ng-click="delete(bike.id)"
-                            class="btn btn-danger">
-                        <span class="glyphicon glyphicon-remove-circle"></span> Delete
+                            class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
                     </button>
-                    <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" class="btn btn-info ladda-button"data-style="zoom-out">
+
+                </td>
+                <td>
+                    <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button"data-style="zoom-out">
                         <span class="ladda-label">
                             <span ng-if="bike.rented"><span class="glyphicon glyphicon-arrow-left"></span> Return Bike</span>
                         </span>

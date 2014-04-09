@@ -102,3 +102,15 @@ ul#strength {
 /* end Password strength bar style */
 
 .angular-google-map-container { height: 400px; }
+
+.form-inline .form-group input {
+    width:300px;
+}
+
+.form-inline {
+    margin: 20px;
+}
+
+.table-response tr td {
+
+}

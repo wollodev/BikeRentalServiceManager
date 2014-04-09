@@ -37,8 +37,12 @@ public class BikeStation implements Serializable {
     @Column(name = "opening_hours")
     private String openingHours;
 
-    @Column(name = "number_ports")
-    private int numberPorts;
+
+    @Column(name = "location_latitude")
+    private float locationLatitude;
+
+    @Column(name = "location_longitude")
+    private float locationLongitude;
 
     @ManyToOne
     @JoinColumn(name = "user_login")
@@ -49,12 +53,12 @@ public class BikeStation implements Serializable {
     @JsonManagedReference
     private Set<Bike> bikes;
 
-    @PreRemove
-    public void onDelete() {
-        for (Bike bike : getBikes()) {
-            bike.setBikeStation(null);
-        }
-    }
+//    @PreRemove
+//    public void onDelete() {
+//        for (Bike bike : getBikes()) {
+//            bike.setBikeStation(null);
+//        }
+//    }
 
     public User getUser() {
         return user;
@@ -133,14 +137,21 @@ public class BikeStation implements Serializable {
         this.openingHours = openingHours;
     }
 
-    public int getNumberPorts() {
-        return numberPorts;
+    public float getLocationLatitude() {
+        return locationLatitude;
     }
 
-    public void setNumberPorts(int numberPorts) {
-        this.numberPorts = numberPorts;
+    public void setLocationLatitude(float locationLatitude) {
+        this.locationLatitude = locationLatitude;
     }
 
+    public float getLocationLongitude() {
+        return locationLongitude;
+    }
+
+    public void setLocationLongitude(float locationLongitude) {
+        this.locationLongitude = locationLongitude;
+    }
 
     public Set<Bike> getBikes() {
         return bikes;
@@ -181,7 +192,8 @@ public class BikeStation implements Serializable {
                 ", addressCity='" + addressCity + '\'' +
                 ", addressZip='" + addressZip + '\'' +
                 ", openingHours='" + openingHours + '\'' +
-                ", numberPorts='" + numberPorts +
+                ", longitude='" + locationLongitude + '\'' +
+                ", latitude='" + locationLatitude +
                 '}';
     }
 }

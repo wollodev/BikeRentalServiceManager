@@ -5,6 +5,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.rwth.idsg.brsm.domain.Bike;
 import de.rwth.idsg.brsm.domain.BikeStation;
 import de.rwth.idsg.brsm.repository.BikeRepository;
+import de.rwth.idsg.brsm.repository.BikeStationRepository;
 import de.rwth.idsg.brsm.security.AuthoritiesConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,9 @@ public class BikeResource {
 
     @Autowired
     private BikeRepository bikeRepository;
+
+    @Autowired
+    private BikeStationRepository bikeStationRepository;
 
     /**
      * POST  /rest/bikes -> Create a new bike.
@@ -97,12 +101,10 @@ public class BikeResource {
     @Timed
     public void delete(@PathVariable Long id, HttpServletResponse response) {
         log.debug("REST request to delete Bike : {}", id);
-//        BikeStation bikeStation = bikeRepository.findOne(id).getBikeStation();
-//        if (bikeStation != null) {
-//            bikeStation.removeBike(bikeRepository.findOne(id));
-//            bikeStationRepository.save(bikeStation);
-//        }
 
-        bikeRepository.delete(id);
+        BikeStation bikeStation = bikeRepository.findOne(id).getBikeStation();
+
+        bikeStation.removeBike(bikeRepository.findOne(id));
+        bikeStationRepository.save(bikeStation);
     }
 }

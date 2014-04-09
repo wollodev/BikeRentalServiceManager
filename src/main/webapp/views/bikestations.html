@@ -1,6 +1,6 @@
 <div>
 
-    <h2>BikeStations</h2>
+    <h2>Bike Stations</h2>
 
     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#saveBikeStationModal">
         <span class="glyphicon glyphicon-flash"></span> Create a new BikeStation
@@ -16,14 +16,14 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                                 ng-click="clear()">&times;</button>
-                        <h4 class="modal-title" id="myBikeStationLabel">Create or edit a BikeStation</h4>
+                        <h4 class="modal-title" id="myBikeStationLabel">Create or edit a Bike Station</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" name="id"
-                                   ng-model="bikestation.id" readonly>
-                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<label>ID</label>-->
+                            <!--<input type="text" class="form-control" name="id"-->
+                                   <!--ng-model="bikestation.id" readonly>-->
+                        <!--</div>-->
 
                         <div class="form-group">
                             <label>Name</label>
@@ -53,12 +53,6 @@
                             <label>Opening Hours</label>
                             <input type="text" class="form-control" name="openingHours"
                                    ng-model="bikestation.openingHours" ng-minlength=1 ng-maxlength=255 required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Number Ports</label>
-                            <input type="number" class="form-control" name="numberPorts"
-                                   ng-model="bikestation.numberPorts" ng-minlength=1 ng-maxlength=255 required>
                         </div>
 
                     </div>

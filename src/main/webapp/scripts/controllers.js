@@ -10,6 +10,10 @@ bikeRentalServiceManagerApp.controller('AdminController', ['$scope',
     function ($scope) {
     }]);
 
+bikeRentalServiceManagerApp.controller('LenderController', ['$scope',
+    function ($scope) {
+    }]);
+
 bikeRentalServiceManagerApp.controller('LanguageController', ['$scope', '$translate',
     function ($scope, $translate) {
         $scope.changeLanguage = function (languageKey) {
@@ -269,6 +273,10 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
 
         $scope.create = function () {
             delete $scope.bikestation.numberOfBikes;
+
+            $scope.bikestation.locationLatitude = 50.767800;
+            $scope.bikestation.locationLongitude = 6.091499;
+
             BikeStation.save($scope.bikestation,
                 function () {
                     $scope.bikestations = BikeStation.query();
@@ -285,7 +293,7 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
         $scope.delete = function (id) {
             BikeStation.delete({id: id},
                 function () {
-                    $scope.bikestations = BikeStation.my.query();
+                    $scope.bikestations = BikeStation.query();
                 });
         };
 
@@ -298,6 +306,7 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
     function ($scope, $routeParams, BikeStation, Bike, $http) {
 
         $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
+
 
         $scope.create = function () {
             $http.post('app/rest/bikestations/' + $routeParams.bikestationId + '/addBike', $scope.bike).success(
@@ -327,6 +336,9 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         $scope.rent = function (bike) {
 
             var ladda = document.querySelector("#bike" + bike.id).ladda;
+
+            var rentButton = document.querySelector("#bike" + bike.id);
+
 
             ladda.start();
 

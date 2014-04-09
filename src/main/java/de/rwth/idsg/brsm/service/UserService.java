@@ -52,11 +52,10 @@ public class UserService {
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         newUser.setPassword(encryptedPassword);
 
-        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
-
         Set authoritySet = new HashSet();
-
-        authoritySet.add(authority);
+        authoritySet.add(authorityRepository.findOne(AuthoritiesConstants.MANAGER));
+        authoritySet.add(authorityRepository.findOne(AuthoritiesConstants.LENDER));
+        authoritySet.add(authorityRepository.findOne(AuthoritiesConstants.USER));
 
         newUser.setAuthorities(authoritySet);
 

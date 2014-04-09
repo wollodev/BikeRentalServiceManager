@@ -42,4 +42,15 @@
 
     </changeSet>
 
+    <changeSet id="4" author="wolfgang">
+        <addColumn tableName="T_BIKE_STATION">
+            <column name="location_latitude" type="numeric"></column>
+            <column name="location_longitude" type="numeric"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="5" author="wolfgang">
+        <dropColumn tableName="T_BIKE_STATION" columnName="number_ports"></dropColumn>
+    </changeSet>
+
 </databaseChangeLog>
