@@ -3,10 +3,17 @@
 
     <google-map center="map.center" zoom="map.zoom" ng-show="showMap" id="map" control="map"
             draggable="true">
+        <marker ng-repeat="bikestation in bikestations"
+            coords='{"latitude": bikestation.locationLatitude, "longitude": bikestation.locationLongitude}'>
+            <window ng-cloak
+                show="bikestation.showInfoWindow">
+                <div class="info-window">
+                    <p>Name: {{bikestation.name}}</p>
+                    <p>Bikes: {{bikestation.numberOfAvailableBikes}} von {{bikestation.numberOfBikes}}</p>
+                </div>
+            </window>
+        </marker>
     </google-map>
-    <div>
-        <p ng-repeat="item in mapMarkers" ng-cloak>{{item}}</p>
-    </div>
 
     <div>
         <button class="btn btn-primary btn-sm" ng-click="toggleMap()">

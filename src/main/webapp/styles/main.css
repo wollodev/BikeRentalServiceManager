@@ -114,3 +114,8 @@ ul#strength {
 .table-response tr td {
 
 }
+
+.info-window {
+    width: 150px;
+    height: 100%;
+}

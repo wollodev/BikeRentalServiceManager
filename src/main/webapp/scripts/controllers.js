@@ -274,14 +274,30 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
         $scope.create = function () {
             delete $scope.bikestation.numberOfBikes;
 
-            $scope.bikestation.locationLatitude = 50.767800;
-            $scope.bikestation.locationLongitude = 6.091499;
+            // query google geocoder for coordinates
 
-            BikeStation.save($scope.bikestation,
-                function () {
-                    $scope.bikestations = BikeStation.query();
-                    $('#saveBikeStationModal').modal('hide');
-                    $scope.clear();
+            $scope.geocoder = new google.maps.Geocoder();
+
+            var address = $scope.bikestation.addressStreet + ', ' + $scope.bikestation.addressCity;
+
+            $scope.geocoder.geocode({'address': address},
+                function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        console.log(results[0].geometry.location);
+
+                        $scope.bikestation.locationLatitude = results[0].geometry.location.k;
+                        $scope.bikestation.locationLongitude = results[0].geometry.location.A;
+
+                        BikeStation.save($scope.bikestation,
+                            function () {
+                                $scope.bikestations = BikeStation.query();
+                                $('#saveBikeStationModal').modal('hide');
+                                $scope.clear();
+                            });
+
+                    } else {
+                        console.log("Geocode for " + addressString + " was unsuccessful! ()" + status);
+                    }
                 });
         };
 
@@ -430,9 +446,9 @@ bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location',
 
 //    $scope.bikestations = resolvedBikeStation;
 
-    $scope.mapMarkers = new Array();
-
     $scope.showMap = true;
+
+//    $scope.mapMarkers = new Array();
 
     // center map on aachen, zoomed in
     $scope.map = {
@@ -443,45 +459,33 @@ bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location',
         zoom: 14
     };
 
-    function getMapObject() {
-        $scope.map.control.getGMap();
-    }
-
+    // fetch all bikestations from back end
     var promise = $http.get('/app/rest/allbikestations');
-
     promise.success(function(data, status, headers, config) {
-        $scope.geocoder = new google.maps.Geocoder();
-
-        var map = $scope.map.getGMap();
-
         $scope.bikestations = data;
-
-        for (var i = 0; i < $scope.bikestations.length; i++) {
-            var station = $scope.bikestations[i];
-            var address = station.addressStreet + ', ' + station.addressCity;
-
-            $scope.geocoder.geocode({'address': address},
-                function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        console.log(results[0].geometry.location);
-                        var newMarker = new google.maps.Marker(
-                            {
-                                map: map,
-                                position: results[0].geometry.location
-                            }
-                        );
-                    } else {
-                        console.log("Geocode for " + addressString + " was unsuccessful! ()" + status);
-                    }
-                });
-        }
     }).error(function(data, status) {
-        console.log(status);
+        console.log("Failed to fetch Bikestations:" + status);
     });
 
     $scope.gotoDetails = function (bikeStationId) {
         $location.path('/bikestations/'+bikeStationId);
     }
+
+//    $scope.infoWindow = new google.maps.InfoWindow({
+//        content: ''
+//    });
+
+//    $scope.showInfo = function (station, marker) {
+//        console.log("Clicked the button " + station.name);
+//
+//        var position = google.maps.LatLng(station.locationLatitude, station.locationLongitude);
+//        var map = $scope.map.getGMap()
+//
+//        var infoWindow = new google.maps.InfoWindow({
+//            content: "blablabla"
+//        });
+//        infoWindow.open(map, position);
+//    }
 
     $scope.toggleMap = function () {
         $scope.showMap = !$scope.showMap;
