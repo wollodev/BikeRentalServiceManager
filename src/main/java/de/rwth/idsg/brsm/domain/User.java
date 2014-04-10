@@ -1,5 +1,6 @@
 package de.rwth.idsg.brsm.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
@@ -44,6 +45,15 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private Set<BikeStation> bikeStations;
+
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "manager_login")
+    private User manager;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "manager")
+    private Set<User> lenders;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.MERGE)
@@ -130,6 +140,22 @@ public class User implements Serializable {
 
     public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
         this.persistentTokens = persistentTokens;
+    }
+
+    public Set<User> getLenders() {
+        return lenders;
+    }
+
+    public void setLenders(Set<User> lenders) {
+        this.lenders = lenders;
+    }
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
     }
 
     @Override

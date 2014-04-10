@@ -52,6 +52,29 @@ public class UserService {
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         newUser.setPassword(encryptedPassword);
 
+
+        User currentUser = this.getUserWithAuthorities();
+        Set<Authority> authorities = currentUser.getAuthorities();
+
+        for (Authority authority : authorities) {
+            if (authority.getName().equals(AuthoritiesConstants.MANAGER)) {
+
+                newUser.setManager(currentUser);
+
+                Set authoritySet = new HashSet();
+                authoritySet.add(authorityRepository.findOne(AuthoritiesConstants.LENDER));
+                authoritySet.add(authorityRepository.findOne(AuthoritiesConstants.USER));
+
+                newUser.setAuthorities(authoritySet);
+
+                userRepository.save(newUser);
+
+                log.debug("Created new user {}", newUser);
+
+                return;
+            }
+        }
+
         Set authoritySet = new HashSet();
         authoritySet.add(authorityRepository.findOne(AuthoritiesConstants.MANAGER));
         authoritySet.add(authorityRepository.findOne(AuthoritiesConstants.LENDER));

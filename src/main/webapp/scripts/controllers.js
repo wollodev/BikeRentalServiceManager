@@ -406,6 +406,24 @@ bikeRentalServiceManagerApp.controller('SignupController', ['$scope', '$location
             });
     }
 
+    $scope.createLender = function() {
+
+        // save new user and redirect to login page after (delay)
+        User.save($scope.lender,
+            function() {
+                $scope.signUpSuccess = true;
+                $('#saveLenderModal').modal('hide');
+                $scope.clear();
+            }, function() {
+                $scope.signUpError = true;
+                console.log("Error handler");
+            });
+    }
+
+    $scope.clear = function () {
+        $scope.lender = null;
+    };
+
 }]);
 
 bikeRentalServiceManagerApp.controller('DemoController', ['$scope', '$location', '$http',  function ($scope, $location, $http) { //BikeStation, resolvedBikeStation, $http) {

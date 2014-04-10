@@ -5,6 +5,7 @@ import de.rwth.idsg.brsm.domain.Authority;
 import de.rwth.idsg.brsm.domain.Bike;
 import de.rwth.idsg.brsm.domain.BikeStation;
 import de.rwth.idsg.brsm.domain.User;
+import de.rwth.idsg.brsm.repository.AuthorityRepository;
 import de.rwth.idsg.brsm.repository.BikeStationRepository;
 import de.rwth.idsg.brsm.security.AuthoritiesConstants;
 import de.rwth.idsg.brsm.security.SecurityUtils;
@@ -34,6 +35,9 @@ public class BikeStationResource {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
     /**
      * POST  /rest/bikestations -> Create a new bikestation.
      */
@@ -43,8 +47,14 @@ public class BikeStationResource {
             method = RequestMethod.POST,
             produces = "application/json")
     @Timed
-    public void create(@RequestBody BikeStation bikestation) {
+    public void create(@RequestBody BikeStation bikestation, HttpServletResponse response) {
         User currentUser = userService.getUserWithAuthorities();
+
+        // only owner of the bikestation can change an existing bikestation
+        if (bikestation.getId() > 0 && currentUser.equals(bikestation.getUser())) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
+
         bikestation.setUser(currentUser);
         log.debug("REST request: to save BikeStation : {}", bikestation);
         bikestationRepository.save(bikestation);
@@ -93,7 +103,15 @@ public class BikeStationResource {
 
         User currentUser = userService.getUserWithAuthorities();
 
-        return bikestationRepository.findByUser(currentUser);
+
+        // when currentuser is manager, return all his stations
+        if (currentUser.getAuthorities().contains(authorityRepository.findOne(AuthoritiesConstants.MANAGER))) {
+            return bikestationRepository.findByUser(currentUser);
+        }
+
+        // return stations of the lender's manager
+        return bikestationRepository.findByUser(currentUser.getManager());
+
     }
 
     /**

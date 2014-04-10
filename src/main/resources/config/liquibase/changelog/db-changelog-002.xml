@@ -59,4 +59,15 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="7" author="wolfgang">
+        <addColumn tableName="T_USER">
+            <column name="manager_login" type="varchar(50)"></column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="T_USER" baseColumnNames="manager_login"
+                                 constraintName="fk_lender_manager"
+                                 referencedTableName="T_USER"
+                                 referencedColumnNames="login" />
+    </changeSet>
+
 </databaseChangeLog>
