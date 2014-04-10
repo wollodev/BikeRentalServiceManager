@@ -52,5 +52,11 @@
     <changeSet id="5" author="wolfgang">
         <dropColumn tableName="T_BIKE_STATION" columnName="number_ports"></dropColumn>
     </changeSet>
+    
+    <changeSet id="6" author="wolfgang">
+        <addColumn tableName="T_BIKE">
+            <column name="note" type="text"></column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

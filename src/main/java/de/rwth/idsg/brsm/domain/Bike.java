@@ -24,6 +24,9 @@ public class Bike implements Serializable {
     @Column(name = "is_rented")
     private boolean isRented;
 
+    @Column(name = "note")
+    private String note;
+
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name="bike_station_id")
@@ -58,6 +61,14 @@ public class Bike implements Serializable {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public boolean isRented() {

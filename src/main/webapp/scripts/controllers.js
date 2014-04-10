@@ -309,17 +309,31 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
 
 
         $scope.create = function () {
+            if ($scope.editableBike != null) {
+                delete $scope.editableBike.rented;
+                delete $scope.editableBike.bikeStationId;
+
+                Bike.save($scope.editableBike,
+                    function () {
+                        $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
+                        $('#editBikeModal').modal('hide');
+                        $scope.clear();
+                    });
+
+                return;
+            }
+
+            $scope.bike.note = "Write here some notes...";
             $http.post('app/rest/bikestations/' + $routeParams.bikestationId + '/addBike', $scope.bike).success(
                 function () {
                     $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
-                    $('#saveBikeModal').modal('hide');
                     $scope.clear();
                 });
         };
 
         $scope.update = function (id) {
-            $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
-            $('#saveBikeModal').modal('show');
+            $scope.editableBike = Bike.get({id: id});
+            $('#editBikeModal').modal('show');
         };
 
         $scope.delete = function (id) {
@@ -330,7 +344,8 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         };
 
         $scope.clear = function () {
-//            $scope.bikestation = {id: "", sampleTextAttribute: "", sampleDateAttribute: ""};
+            $scope.bike = null;
+            $scope.editableBike = null;
         };
 
         $scope.rent = function (bike) {
