@@ -8,6 +8,7 @@ import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -39,10 +40,10 @@ public class BikeStation implements Serializable {
 
 
     @Column(name = "location_latitude")
-    private float locationLatitude;
+    private BigDecimal locationLatitude;
 
     @Column(name = "location_longitude")
-    private float locationLongitude;
+    private BigDecimal locationLongitude;
 
     @ManyToOne
     @JoinColumn(name = "user_login")
@@ -137,19 +138,19 @@ public class BikeStation implements Serializable {
         this.openingHours = openingHours;
     }
 
-    public float getLocationLatitude() {
+    public BigDecimal getLocationLatitude() {
         return locationLatitude;
     }
 
-    public void setLocationLatitude(float locationLatitude) {
+    public void setLocationLatitude(BigDecimal locationLatitude) {
         this.locationLatitude = locationLatitude;
     }
 
-    public float getLocationLongitude() {
+    public BigDecimal getLocationLongitude() {
         return locationLongitude;
     }
 
-    public void setLocationLongitude(float locationLongitude) {
+    public void setLocationLongitude(BigDecimal locationLongitude) {
         this.locationLongitude = locationLongitude;
     }
 

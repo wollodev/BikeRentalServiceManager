@@ -70,4 +70,14 @@
                                  referencedColumnNames="login" />
     </changeSet>
 
+    <changeSet id="9" author="wolfgang">
+        <dropColumn tableName="T_BIKE_STATION" columnName="location_latitude"/>
+        <dropColumn tableName="T_BIKE_STATION" columnName="location_longitude"/>
+
+        <addColumn tableName="T_BIKE_STATION">
+            <column name="location_latitude" type="numeric(24,18)"></column>
+            <column name="location_longitude" type="numeric(24,18)"></column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
