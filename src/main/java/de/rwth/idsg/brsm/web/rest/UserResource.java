@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import de.rwth.idsg.brsm.domain.User;
 import de.rwth.idsg.brsm.repository.UserRepository;
 import de.rwth.idsg.brsm.security.AuthoritiesConstants;
+import de.rwth.idsg.brsm.security.SecurityUtils;
 import de.rwth.idsg.brsm.service.UserService;
 import de.rwth.idsg.brsm.web.rest.dto.UserDTO;
 import de.rwth.idsg.brsm.web.rest.dto.UserRegistrationDTO;
@@ -54,10 +55,16 @@ public class UserResource {
             method = RequestMethod.POST,
             produces = "application/json")
     @Timed
-    public void createUser(@RequestBody UserRegistrationDTO user) {
+    public void createUser(@RequestBody UserRegistrationDTO user, HttpServletResponse response) {
         log.debug("REST request to create {}", user);
 
-        userService.createUser(user);
+        if (SecurityUtils.isAuthenticated()) {
+            if (!userService.createLender(user)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }
+        } else {
+            userService.createUser(user);
+        }
     }
 
     /**

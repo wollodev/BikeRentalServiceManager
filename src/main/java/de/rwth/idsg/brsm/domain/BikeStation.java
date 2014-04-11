@@ -61,6 +61,9 @@ public class BikeStation implements Serializable {
 //        }
 //    }
 
+    @Formula("(SELECT count(*) FROM t_bike AS b WHERE b.bike_station_id = id AND b.is_rented = 'false')")
+    private int numberOfAvailableBikes;
+
     public User getUser() {
         return user;
     }
@@ -165,6 +168,8 @@ public class BikeStation implements Serializable {
     public int getNumberOfBikes() {
         return bikes.size();
     }
+
+    public int getNumberOfAvailableBikes() { return numberOfAvailableBikes; }
 
 
     @Override

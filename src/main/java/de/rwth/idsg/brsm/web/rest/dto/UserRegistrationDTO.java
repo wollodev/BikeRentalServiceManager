@@ -17,8 +17,8 @@ public class UserRegistrationDTO extends UserDTO {
 
     public UserRegistrationDTO() { }
 
-    public UserRegistrationDTO(String login, String firstName, String lastName, String email, List<String> roles, String password) {
-        super(login, firstName, lastName, email, roles);
+    public UserRegistrationDTO(String login, String firstName, String lastName, String email, String password) {
+        super(login, firstName, lastName, email, null);
         this.password = password;
     }
 

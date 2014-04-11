@@ -70,7 +70,7 @@
                                  referencedColumnNames="login" />
     </changeSet>
 
-    <changeSet id="9" author="wolfgang">
+    <changeSet id="8" author="wolfgang">
         <dropColumn tableName="T_BIKE_STATION" columnName="location_latitude"/>
         <dropColumn tableName="T_BIKE_STATION" columnName="location_longitude"/>
 

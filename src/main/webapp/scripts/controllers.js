@@ -407,7 +407,7 @@ bikeRentalServiceManagerApp.controller('SignupController', ['$scope', '$location
 
     $scope.createUser = function() {
         // post the new user to the server, fix user role assignment?
-        $scope.signup.user.roles = ["ROLE_USER"];
+//        $scope.signup.user.roles = ["ROLE_USER"];
 
         // save new user and redirect to login page after (delay)
         User.save($scope.signup.user,

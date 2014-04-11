@@ -6,6 +6,7 @@ import de.rwth.idsg.brsm.domain.Bike;
 import de.rwth.idsg.brsm.domain.BikeStation;
 import de.rwth.idsg.brsm.domain.User;
 import de.rwth.idsg.brsm.repository.AuthorityRepository;
+import de.rwth.idsg.brsm.repository.BikeRepository;
 import de.rwth.idsg.brsm.repository.BikeStationRepository;
 import de.rwth.idsg.brsm.security.AuthoritiesConstants;
 import de.rwth.idsg.brsm.security.SecurityUtils;
@@ -63,7 +64,7 @@ public class BikeStationResource {
     /**
      * POST  /rest/bikestations/{id}/addBike -> Create add new bike to bikestation.
      */
-    @RolesAllowed(AuthoritiesConstants.LENDER) // was LENDER
+    @RolesAllowed(AuthoritiesConstants.MANAGER)
     @RequestMapping(value = "/rest/bikestations/{id}/addBike",
             method = RequestMethod.POST,
             produces = "application/json")
