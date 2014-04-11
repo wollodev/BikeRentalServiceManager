@@ -108,7 +108,8 @@ bikeRentalServiceManagerApp.constant('USER_ROLES', {
         all: '*',
         admin: 'ROLE_ADMIN',
         user: 'ROLE_USER',
-        lender: 'ROLE_LENDER'
+        lender: 'ROLE_LENDER',
+        manager: 'ROLE_MANAGER'
     });
 
 bikeRentalServiceManagerApp.factory('AuthenticationSharedService', ['$rootScope', '$http', '$cookieStore', 'authService', 'Session', 'Account',
