@@ -10,7 +10,9 @@ import de.rwth.idsg.brsm.repository.BikeRepository;
 import de.rwth.idsg.brsm.repository.BikeStationRepository;
 import de.rwth.idsg.brsm.security.AuthoritiesConstants;
 import de.rwth.idsg.brsm.security.SecurityUtils;
+import de.rwth.idsg.brsm.service.BikeStationService;
 import de.rwth.idsg.brsm.service.UserService;
+import de.rwth.idsg.brsm.web.rest.dto.BikeStationDetailDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class BikeStationResource {
 
     @Autowired
     private BikeStationRepository bikestationRepository;
+
+    @Autowired
+    private BikeStationService bikeStationService;
 
     @Autowired
     private UserService userService;
@@ -129,6 +134,21 @@ public class BikeStationResource {
         if (bikestation == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
+        return bikestation;
+    }
+
+    /**
+     * GET  /rest/bikestations/:id -> get the "id" bikestation.
+     */
+    @RolesAllowed({AuthoritiesConstants.ANONYMOUS, AuthoritiesConstants.USER}) // was LENDER
+    @RequestMapping(value = "/rest/bikestationsdetail/{id}",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    @Timed
+    public BikeStationDetailDTO getWithDetails(@PathVariable Long id) {
+        log.debug("REST request to get BikeStation : {}", id);
+        BikeStationDetailDTO bikestation = bikeStationService.getBikeStationDetails(id);
+
         return bikestation;
     }
 

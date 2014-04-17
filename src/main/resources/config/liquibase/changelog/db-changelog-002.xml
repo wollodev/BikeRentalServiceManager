@@ -64,7 +64,8 @@
             <column name="manager_login" type="varchar(50)"></column>
         </addColumn>
 
-        <addForeignKeyConstraint baseTableName="T_USER" baseColumnNames="manager_login"
+        <addForeignKeyConstraint baseTableName="T_USER"
+                                 baseColumnNames="manager_login"
                                  constraintName="fk_lender_manager"
                                  referencedTableName="T_USER"
                                  referencedColumnNames="login" />
@@ -78,6 +79,31 @@
             <column name="location_latitude" type="numeric(24,18)"></column>
             <column name="location_longitude" type="numeric(24,18)"></column>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="9" author="wolfgang">
+        <createTable tableName="T_BIKE_TYPE">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)"/>
+        </createTable>
+
+        <addColumn tableName="T_BIKE">
+            <column name="type_id" type="int"></column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="type_id"
+                                 baseTableName="T_BIKE"
+                                 constraintName="fk_bike_bike_type"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_BIKE_TYPE"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/biketypes.csv"
+                  separator=";"
+                  tableName="T_BIKE_TYPE"/>
+
     </changeSet>
 
 </databaseChangeLog>

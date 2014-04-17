@@ -20,6 +20,10 @@
                             <input type="text" class="form-control" name="tag"
                                    ng-model="editableBike.tag" ng-minlength=1 ng-maxlength=50 required>
 
+                            <label>Bike Type</label>
+                            <select class="form-control" ng-model="editableBike.bikeType" ng-options="biketype as biketype.type for biketype in biketypes">
+                            </select>
+
                             <label>Note</label>
                             <textarea class="form-control" rows="4" name="note" ng-model="editableBike.note" required></textarea>
                         </div>
@@ -46,6 +50,11 @@
                             <input type="text" placeholder="Enter Bike Name or Identifier" class="form-control" name="tag"
                                    ng-model="bike.tag" id="bikeTag" ng-minlength=1 ng-maxlength=255 required>
 
+                            <label class="sr-only" for="bikeTag">Bike Type</label>
+                            <select class="form-control" ng-model="bike.bikeType" required name="Bike Type" ng-options="biketype as biketype.type for biketype in biketypes">
+                                <option value="" selected="selected" disabled="disabled" style="display:none;">Choose...</option>
+                            </select>
+
                         </div>
 
                     <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Add</button>
@@ -57,6 +66,7 @@
             <thead>
             <tr>
                 <th>Bike Tag</th>
+                <th>Bike Type</th>
                 <th></th>
             </tr>
             </thead>
@@ -75,6 +85,9 @@
                         <span class="glyphicon glyphicon-remove-circle"></span>
                     </button>
 
+                </td>
+                <td>
+                    {{bike.bikeType.type}}
                 </td>
                 <td>
                     <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button"data-style="zoom-out">

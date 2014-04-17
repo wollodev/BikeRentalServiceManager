@@ -186,6 +186,14 @@ bikeRentalServiceManagerApp.factory('BikeStation', ['$resource',
         });
     }]);
 
+bikeRentalServiceManagerApp.factory('BikeType', ['$resource',
+    function ($resource) {
+        return $resource('app/rest/biketypes/:id', {}, {
+            'query': { method: 'GET', isArray: true},
+            'get': { method: 'GET'}
+        });
+    }]);
+
 bikeRentalServiceManagerApp.factory('Bike', ['$resource',
     function ($resource) {
         return $resource('app/rest/bikes/:id', {}, {

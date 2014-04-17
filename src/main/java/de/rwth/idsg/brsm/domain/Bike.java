@@ -32,6 +32,10 @@ public class Bike implements Serializable {
     @JoinColumn(name="bike_station_id")
     private BikeStation bikeStation;
 
+    @ManyToOne
+    @JoinColumn(name="type_id")
+    private BikeType bikeType;
+
     public BikeStation getBikeStation() {
         return bikeStation;
     }
@@ -79,6 +83,13 @@ public class Bike implements Serializable {
         this.isRented = isRented;
     }
 
+    public BikeType getBikeType() {
+        return bikeType;
+    }
+
+    public void setBikeType(BikeType bikeType) {
+        this.bikeType = bikeType;
+    }
 
     @Override
     public boolean equals(Object o) {

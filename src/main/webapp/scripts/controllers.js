@@ -318,11 +318,12 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
         };
     }]);
 
-bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope', '$routeParams', 'BikeStation', 'Bike', '$http',
-    function ($scope, $routeParams, BikeStation, Bike, $http) {
+bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope', '$routeParams', 'BikeStation', 'Bike', '$http', 'BikeType',
+    function ($scope, $routeParams, BikeStation, Bike, $http, BikeType) {
 
         $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
 
+        $scope.biketypes = BikeType.query();
 
         $scope.create = function () {
             if ($scope.editableBike != null) {
@@ -348,7 +349,16 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         };
 
         $scope.update = function (id) {
-            $scope.editableBike = Bike.get({id: id});
+            $scope.editableBike = Bike.get({id: id}, function(bike){
+                console.log($scope.biketypes);
+                $scope.biketypes.forEach( function(biketype){
+                    console.log(biketype);
+                    if (biketype.id == bike.bikeType.id) {
+                        bike.bikeType = biketype;
+                        console.log("updat biketype");
+                    }
+                });
+            });
             $('#editBikeModal').modal('show');
         };
 
