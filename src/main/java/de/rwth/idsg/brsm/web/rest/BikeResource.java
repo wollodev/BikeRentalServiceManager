@@ -104,7 +104,13 @@ public class BikeResource {
 
         BikeStation bikeStation = bikeRepository.findOne(id).getBikeStation();
 
-        bikeStation.removeBike(bikeRepository.findOne(id));
-        bikeStationRepository.save(bikeStation);
+        // check if the bike is not still rented
+        Bike bike = bikeRepository.findOne(id);
+        if (bike.isRented()) {
+            response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+        } else {
+            bikeStation.removeBike(bikeRepository.findOne(id));
+            bikeStationRepository.save(bikeStation);
+        }
     }
 }

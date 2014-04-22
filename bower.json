@@ -18,8 +18,9 @@
     "angular-translate-loader-static-files": "2.0.0",
     "angular-dynamic-locale": "0.1.1",
     "angular-i18n": "1.2.5",
-    "ladda" : "*",
-    "angular-google-maps" : "1.0.16"
+    "ladda": "*",
+    "angular-google-maps": "1.0.16",
+    "ng-breadcrumbs": "~0.0.9"
   },
   "devDependencies": {
     "angular-mocks": "1.2.13",

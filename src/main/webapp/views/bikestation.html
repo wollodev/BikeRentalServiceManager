@@ -81,6 +81,7 @@
                     </button>
                     <button type="submit"
                             ng-click="delete(bike.id)"
+                            ng-disabled="bike.rented"
                             class="btn btn-danger btn-xs">
                         <span class="glyphicon glyphicon-remove-circle"></span>
                     </button>

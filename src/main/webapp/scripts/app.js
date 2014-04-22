@@ -3,7 +3,7 @@
 /* App Module */
 
 var bikeRentalServiceManagerApp = angular.module('bikeRentalServiceManagerApp', ['http-auth-interceptor', 'tmh.dynamicLocale',
-    'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate', 'google-maps']);
+    'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate', 'google-maps', 'ng-breadcrumbs']);
 
 bikeRentalServiceManagerApp
     .config(['$routeProvider', '$httpProvider', '$translateProvider',  'tmhDynamicLocaleProvider', 'USER_ROLES',
@@ -12,6 +12,7 @@ bikeRentalServiceManagerApp
                 .when('/login', {
                     templateUrl: 'views/login.html',
                     controller: 'LoginController',
+                    label: 'Login',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
@@ -19,12 +20,14 @@ bikeRentalServiceManagerApp
                 .when('/signup', {
                     templateUrl: 'views/signup.html',
                     controller: 'SignupController',
+                    label: 'Signup',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
                 })
                 .when('/error', {
                     templateUrl: 'views/error.html',
+                    label: 'Error',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
@@ -32,6 +35,7 @@ bikeRentalServiceManagerApp
                 .when('/settings', {
                     templateUrl: 'views/settings.html',
                     controller: 'SettingsController',
+                    label: 'Settings',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
@@ -39,6 +43,7 @@ bikeRentalServiceManagerApp
                 .when('/password', {
                     templateUrl: 'views/password.html',
                     controller: 'PasswordController',
+                    label: 'Password',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
@@ -46,6 +51,7 @@ bikeRentalServiceManagerApp
                 .when('/sessions', {
                     templateUrl: 'views/sessions.html',
                     controller: 'SessionsController',
+                    label: 'Sessions',
                     resolve:{
                         resolvedSessions:['Sessions', function (Sessions) {
                             return Sessions.get();
@@ -58,6 +64,7 @@ bikeRentalServiceManagerApp
                 .when('/metrics', {
                     templateUrl: 'views/metrics.html',
                     controller: 'MetricsController',
+                    label: 'Metrics',
                     access: {
                         authorizedRoles: [USER_ROLES.admin]
                     }
@@ -65,6 +72,7 @@ bikeRentalServiceManagerApp
                 .when('/logs', {
                     templateUrl: 'views/logs.html',
                     controller: 'LogsController',
+                    label: 'Logs',
                     resolve:{
                         resolvedLogs:['LogsService', function (LogsService) {
                             return LogsService.findAll();
@@ -77,6 +85,7 @@ bikeRentalServiceManagerApp
                 .when('/audits', {
                     templateUrl: 'views/audits.html',
                     controller: 'AuditsController',
+                    label: 'Audits',
                     access: {
                         authorizedRoles: [USER_ROLES.admin]
                     }
@@ -91,6 +100,7 @@ bikeRentalServiceManagerApp
                 .when('/bikestations', {
                     templateUrl: 'views/bikestations.html',
                     controller: 'BikeStationController',
+                    label: 'Bikestations',
                     resolve:{
                         resolvedBikeStation: ['BikeStation', function (BikeStation) {
                             return BikeStation.query();
@@ -103,26 +113,29 @@ bikeRentalServiceManagerApp
                 .when('/bikestations/:bikestationId', {
                     templateUrl: 'views/bikestation.html',
                     controller: 'BikeStationDetailController',
+                    label: 'Bikestation Detail',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }
                 })
-                .when('/bikes', {
-                    templateUrl: 'views/bikes.html',
-                    controller: 'BikeController',
-                    resolve: {
-                        resolvedBike: ['Bike', function (Bike) {
-                            console.log(Bike.query());
-                            return Bike.query();
-                        }]
-                    },
-                    access: {
-                        authorizedRoles: [USER_ROLES.all]
-                    }
-                })
+//                .when('/bikes', {
+//                    templateUrl: 'views/bikes.html',
+//                    controller: 'BikeController',
+//                    label: 'Bikes',
+//                    resolve: {
+//                        resolvedBike: ['Bike', function (Bike) {
+//                            console.log(Bike.query());
+//                            return Bike.query();
+//                        }]
+//                    },
+//                    access: {
+//                        authorizedRoles: [USER_ROLES.all]
+//                    }
+//                })
                 .when('/demo', {
                     templateUrl: 'views/demo.html',
                     controller: 'DemoController',
+                    label: 'Demo',
                     resolve: {
                         resolvedBikeStation: ['BikeStation', function (BikeStation) {
                             return BikeStation.query();
@@ -135,6 +148,7 @@ bikeRentalServiceManagerApp
                 .otherwise({
                     templateUrl: 'views/main.html',
                     controller: 'MainController',
+                    label: 'Main',
                     access: {
                         authorizedRoles: [USER_ROLES.all]
                     }

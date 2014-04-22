@@ -2,8 +2,9 @@
 
 /* Controllers */
 
-bikeRentalServiceManagerApp.controller('MainController', ['$scope',
-    function ($scope) {
+bikeRentalServiceManagerApp.controller('MainController', ['$scope', 'breadcrumbs',
+    function ($scope, breadcrumbs) {
+        $scope.breadcrumbs = breadcrumbs;
     }]);
 
 bikeRentalServiceManagerApp.controller('AdminController', ['$scope',
@@ -296,7 +297,7 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
                             });
 
                     } else {
-                        console.log("Geocode for " + addressString + " was unsuccessful! ()" + status);
+                        console.log("Geocode for " + address + " was unsuccessful! ()" + status);
                     }
                 });
         };
@@ -318,12 +319,17 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
         };
     }]);
 
-bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope', '$routeParams', 'BikeStation', 'Bike', '$http', 'BikeType',
-    function ($scope, $routeParams, BikeStation, Bike, $http, BikeType) {
+bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope', '$routeParams', 'BikeStation', 'Bike', '$http', 'BikeType', 'breadcrumbs',
+    function ($scope, $routeParams, BikeStation, Bike, $http, BikeType, breadcrumbs) {
 
-        $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
+        // get bikestation from server and put id into breadcrumbs afterwards
+        $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId},  function() {
+            $scope.breadcrumbs.options = {"Bikestation Detail": "Bikestation " + $scope.bikestation.id + " Details"};
+        });
 
         $scope.biketypes = BikeType.query();
+
+        $scope.breadcrumbs = breadcrumbs;
 
         $scope.create = function () {
             if ($scope.editableBike != null) {
@@ -409,6 +415,7 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         };
 
     }]);
+
 
 bikeRentalServiceManagerApp.controller('SignupController', ['$scope', '$location', 'User', '$timeout', function($scope, $location, User, $timeout) {
 
