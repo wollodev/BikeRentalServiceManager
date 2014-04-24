@@ -46,24 +46,24 @@
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                                                 ng-click="clear()">&times;</button>
-                                        <h4 class="modal-title" id="myBikeLabel">Create a Lender</h4>
+                                        <h4 class="modal-title" id="myBikeLabel" translate="global.menu.lender.button">Create a Lender</h4>
                                     </div>
                                     <div class="modal-body">
 
                                         <div class="form-group">
-                                            <label>Name</label>
+                                            <label translate="global.menu.lender.name">Name</label>
                                             <input type="text" class="form-control" name="tag"
                                                    ng-model="lender.login" ng-minlength=1 ng-maxlength=50 required>
 
-                                            <label for="password" translate="signup.form.password">Password</label>
-                                            <input type="password" class="form-control" id="password" placeholder="{{'signup.form.password.placeholder' | translate}}"
+                                            <label for="password" translate="global.menu.lender.password">Password</label>
+                                            <input type="password" class="form-control" id="password" placeholder="{{'global.menu.lender.passwordPlaceholder' | translate}}"
                                                    ng-model="lender.password" ng-minlength="3" required="true">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">Cancel
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()" translate="global.menu.lender.cancel">Cancel
                                         </button>
-                                        <button type="submit" ng-disabled="editform.$invalid" class="btn btn-primary">Save</button>
+                                        <button type="submit" ng-disabled="editform.$invalid" class="btn btn-primary" translate="global.menu.lender.save">Save</button>
                                     </div>
                                 </form>
                             </div>

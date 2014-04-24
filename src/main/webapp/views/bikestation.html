@@ -1,72 +1,72 @@
 <div>
 
-    <h2>Bikestation: {{bikestation.name}}</h2>
+    <h2 translate="bikestation.header" translate-values="{stationname: '{{bikestation.name}}'}">Bikestation: {{bikestation.name}}</h2>
 
-    <div class="modal fade" id="editBikeModal" tabindex="-1" role="dialog" aria-labelledby="myBikeLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form name="editform" role="form" novalidate class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
-                      ng-submit="create()">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                                ng-click="clear()">&times;</button>
-                        <h4 class="modal-title" id="myBikeLabel">Create or edit a Bike</h4>
-                    </div>
-                    <div class="modal-body">
+    <!--<div class="modal fade" id="editBikeModal" tabindex="-1" role="dialog" aria-labelledby="myBikeLabel"-->
+         <!--aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+                <!--<form name="editform" role="form" novalidate class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"-->
+                      <!--ng-submit="create()">-->
+                    <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"-->
+                                <!--ng-click="clear()">&times;</button>-->
+                        <!--<h4 class="modal-title" id="myBikeLabel">Create or edit a Bike</h4>-->
+                    <!--</div>-->
+                    <!--<div class="modal-body">-->
 
-                        <div class="form-group">
-                            <label>Bike Identifier/Name</label>
-                            <input type="text" class="form-control" name="tag"
-                                   ng-model="editableBike.tag" ng-minlength=1 ng-maxlength=50 required>
+                        <!--<div class="form-group">-->
+                            <!--<label>Bike Identifier/Name</label>-->
+                            <!--<input type="text" class="form-control" name="tag"-->
+                                   <!--ng-model="editableBike.tag" ng-minlength=1 ng-maxlength=50 required>-->
 
-                            <label>Bike Type</label>
-                            <select class="form-control" ng-model="editableBike.bikeType" ng-options="biketype as biketype.type for biketype in biketypes">
-                            </select>
+                            <!--<label>Bike Type</label>-->
+                            <!--<select class="form-control" ng-model="editableBike.bikeType" ng-options="biketype as biketype.type for biketype in biketypes">-->
+                            <!--</select>-->
 
-                            <label>Note</label>
-                            <textarea class="form-control" rows="4" name="note" ng-model="editableBike.note" required></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">Cancel
-                        </button>
-                        <button type="submit" ng-disabled="editform.$invalid" class="btn btn-primary">Save</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                            <!--<label>Note</label>-->
+                            <!--<textarea class="form-control" rows="4" name="note" ng-model="editableBike.note" required></textarea>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="modal-footer">-->
+                        <!--<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">Cancel-->
+                        <!--</button>-->
+                        <!--<button type="submit" ng-disabled="editform.$invalid" class="btn btn-primary">Save</button>-->
+                    <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
 
 
 
                     <form name="form" class="form-inline" role="form" novalidate
-                      class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
-                      ng-submit="create()">
+                          class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+                          ng-submit="create()">
 
                         <div class="form-group">
-                            <label class="sr-only" for="bikeTag">Bike Name/Identifier</label>
-                            <input type="text" placeholder="Enter Bike Name or Identifier" class="form-control" name="tag"
+                            <label class="sr-only" for="bikeTag" translate="bikestation.create.tagLabel">Bike Name/Identifier</label>
+                            <input type="text" placeholder="{{'bikestation.create.tagPlaceholder' | translate}}" class="form-control" name="tag"
                                    ng-model="bike.tag" id="bikeTag" ng-minlength=1 ng-maxlength=255 required>
 
-                            <label class="sr-only" for="bikeTag">Bike Type</label>
+                            <label class="sr-only" for="bikeTag" translate="bikestation.create.typeLabel">Bike Type</label>
                             <select class="form-control" ng-model="bike.bikeType" required name="Bike Type" ng-options="biketype as biketype.type for biketype in biketypes">
-                                <option value="" selected="selected" disabled="disabled" style="display:none;">Choose...</option>
+                                <option value="" selected="selected" disabled="disabled" style="display:none;" translate="bikestation.create.typeChooser">Choose...</option>
                             </select>
 
                         </div>
 
-                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Add</button>
+                        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="bikestation.create.add">Add</button>
 
-                </form>
+                    </form>
 
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Bike Tag</th>
-                <th>Bike Type</th>
+                <th translate="bikestation.table.header.tag">Bike Tag</th>
+                <th translate="bikestation.table.header.type">Bike Type</th>
                 <th></th>
             </tr>
             </thead>
@@ -91,12 +91,12 @@
                     {{bike.bikeType.type}}
                 </td>
                 <td>
-                    <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button"data-style="zoom-out">
+                    <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button" data-style="zoom-out">
                         <span class="ladda-label">
-                            <span ng-if="bike.rented"><span class="glyphicon glyphicon-arrow-left"></span> Return Bike</span>
+                            <span ng-if="bike.rented" translate="bikestation.table.body.return"><span class="glyphicon glyphicon-arrow-left"></span> Return Bike</span>
                         </span>
                         <span class="ladda-label">
-                            <span ng-if="!bike.rented"><span class="glyphicon glyphicon-arrow-right"></span> Rent Bike</span>
+                            <span ng-if="!bike.rented" translate="bikestation.table.body.rent"><span class="glyphicon glyphicon-arrow-right"></span> Rent Bike</span>
                         </span>
                     </button>
 
@@ -106,6 +106,6 @@
             </tbody>
         </table>
     </div>
-    <a href="/#/bikestations"><span class="label label-info">Back</span></a>
+    <a href="/#/bikestations"><span class="label label-info" translate="bikestation.back">Back</span></a>
 </div>
 

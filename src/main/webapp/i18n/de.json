@@ -14,10 +14,24 @@
                 "logs": "Protokoll",
                 "audits": "Audits",
                 "login": "Anmelden",
-                "logout": "Abmelden"
+                "logout": "Abmelden",
+                "signup": "Registrieren"
+            },
+            "bikestation": {
+                "main": "Haupt",
+                "demo": "Demo",
+                "bikestation": "Fahrradstation"
             },
             "admin": "Administration",
-            "language": "Sprache"
+            "language": "Sprache",
+            "lender": {
+                "button": "Verleiher erstellen",
+                "name": "Name",
+                "password": "Passwort",
+                "passwordPlaceholder": "Passwort eingeben",
+                "cancel": "Abbrechen",
+                "save": "Speichern"
+            }
         },
         "language": {
             "en": "Englisch",
@@ -264,6 +278,46 @@
                 "remoteAddress": "Remote-Adresse:"
             }
         }
+    },
+    "bikestations": {
+        "header": "Fahrradstation erstellen oder ändern",
+        "createbutton": "Neue Station erstellen",
+        "create": {
+            "name": "Name",
+            "street": "Straße",
+            "city": "Stadt",
+            "zip": "PLZ",
+            "hours": "Öffnungszeiten",
+            "cancel": "Abbrechen",
+            "save": "Speichern"
+        },
+        "table": {
+            "id": "ID",
+            "name": "Name",
+            "edit": "Bearbeiten",
+            "delete": "Löschen"
+        }
+    },
+    "bikestation": {
+        "header": "Fahrradstation: {{stationname}}",
+        "create": {
+            "tagLabel": "Fahrradname",
+            "tagPlaceholder": "Fahrradnamen eingeben",
+            "typeLabel": "Fahrradtyp",
+            "typeChooser": "Auswählen...",
+            "add": "Hinzufügen"
+        },
+        "table": {
+            "header": {
+                "tag": "Name",
+                "type": "Typ"
+            },
+            "body": {
+                "rent": "Ausleihen",
+                "return": "Zurückgeben"
+            }
+        },
+        "back": "Zurück"
     },
     "errors": {
         "title": "Fehlerseite!",
