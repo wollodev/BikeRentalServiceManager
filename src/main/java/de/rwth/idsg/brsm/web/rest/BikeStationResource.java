@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -86,10 +88,12 @@ public class BikeStationResource {
             method = RequestMethod.GET,
             produces = "application/json")
     @Timed
-    public List<BikeStation> getStations() {
-        log.debug("REST request to get all BikeStations");
+    public List<BikeStation> getStations(@RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
+        log.debug("REST request to get all BikeStations with latidute: {} and longitude {}", latitude, longitude);
 
-        return bikestationRepository.findAll();
+        List<BikeStation> bikeStation = bikestationRepository.findByLocation(new BigDecimal(latitude), new BigDecimal(longitude));
+
+        return bikeStation;
     }
 
     /**

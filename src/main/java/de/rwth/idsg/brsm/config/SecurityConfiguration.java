@@ -110,6 +110,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/app/rest/authenticate").permitAll()
                 .antMatchers("/app/rest/users").permitAll()
+                .antMatchers("/app/rest/allbikestations").permitAll()
+                .antMatchers("/app/rest/bikestationsdetail/**").permitAll()
                 .antMatchers("/app/rest/bikestations*").hasAuthority(AuthoritiesConstants.LENDER)
                 .antMatchers("/app/rest/bikestations/**").hasAuthority(AuthoritiesConstants.LENDER)
                 .antMatchers("/app/rest/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
