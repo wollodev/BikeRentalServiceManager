@@ -16,7 +16,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "T_BIKE_STATION")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BikeStation implements Serializable {
 
     @Id

@@ -274,6 +274,7 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
 
         $scope.create = function () {
             delete $scope.bikestation.numberOfBikes;
+            delete $scope.bikestation.numberOfAvailableBikes;
 
             // query google geocoder for coordinates
 
@@ -378,6 +379,38 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         $scope.clear = function () {
             $scope.bike = null;
             $scope.editableBike = null;
+        };
+
+        $scope.editBikeStation = function () {
+            delete $scope.bikestation.numberOfBikes;
+            delete $scope.bikestation.numberOfAvailableBikes;
+            delete $scope.bikestation.bikes;
+
+            // query google geocoder for coordinates
+
+            $scope.geocoder = new google.maps.Geocoder();
+
+            var address = $scope.bikestation.addressStreet + ', ' + $scope.bikestation.addressCity;
+
+            $scope.geocoder.geocode({'address': address},
+                function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        console.log(results[0].geometry.location);
+
+                        $scope.bikestation.locationLatitude = results[0].geometry.location.k;
+                        $scope.bikestation.locationLongitude = results[0].geometry.location.A;
+
+                        BikeStation.save($scope.bikestation,
+                            function () {
+                                $scope.bikestation = BikeStation.get();
+                                $('#saveBikeStationModal').modal('hide');
+                                $scope.clear();
+                            });
+
+                    } else {
+                        console.log("Geocode for " + address + " was unsuccessful! ()" + status);
+                    }
+                });
         };
 
         $scope.rent = function (bike) {

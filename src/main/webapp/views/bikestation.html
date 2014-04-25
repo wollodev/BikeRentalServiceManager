@@ -1,6 +1,147 @@
-<div>
+<div class="row">
 
-    <h2 translate="bikestation.header" translate-values="{stationname: '{{bikestation.name}}'}">Bikestation: {{bikestation.name}}</h2>
+    <div class="col-sm-8 col-md-9 main">
+
+        <h2>{{bikestation.name}}</h2>
+
+        <div class="col-sm-4 col-md-3 voffset3" ng-repeat="bike in bikestation.bikes">
+            <!--<a href="/#/bikestations/{{bikestation.id}}" role="button" class="btn-block btn btn-info btn-lg btn-bikestation">-->
+                <!--{{bikestation.name}}-->
+                <!--<br>-->
+                <!--<small>Bikes: {{bikestation.numberOfAvailableBikes}} / {{bikestation.numberOfBikes}}</small>-->
+            <!--</a>-->
+            <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button" data-style="zoom-out">
+            <span class="ladda-label">
+            <p ng-if="bike.rented">
+                {{bike.tag}}
+                <br/>
+                <small>{{bike.bikeType.type}}</small>
+                <br/>
+                <small><b>Rented</b></small>
+            </p>
+            </span>
+            <span class="ladda-label">
+            <p ng-if="!bike.rented">
+                {{bike.tag}}
+                <br/>
+                <small>{{bike.bikeType.type}}</small>
+                <br/>
+                <small><b>Available</b></small>
+            </p>
+            </span>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="col-sm-4 col-md-3 sidebar">
+
+
+        <button class="btn-block btn btn-default" data-toggle="modal" data-target="#saveBikeStationModal">
+            <span class="glyphicon glyphicon-edit"></span> Edit Bikestation
+        </button>
+
+        <button class="btn-block btn btn-danger" data-toggle="modal" data-target="#saveLenderModal">
+            <span class="glyphicon glyphicon-remove"></span> Delete Bikestation
+        </button>
+
+        <h3 class="voffset5">Add new Bike:</h3>
+
+        <form name="form" class="form" role="form" novalidate
+              class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+              ng-submit="create()">
+
+            <div class="form-group">
+                <label class="sr-only" for="bikeTag" translate="bikestation.create.tagLabel">Bike Name/Identifier</label>
+                <input type="text" placeholder="{{'bikestation.create.tagPlaceholder' | translate}}" class="form-control" name="tag"
+                       ng-model="bike.tag" id="bikeTag" ng-minlength=1 ng-maxlength=255 required>
+
+                <label class="sr-only" for="bikeTag" translate="bikestation.create.typeLabel">Bike Type</label>
+                <select class="form-control voffset1" ng-model="bike.bikeType" required name="Bike Type" ng-options="biketype as biketype.type for biketype in biketypes">
+                    <option value="" selected="selected" disabled="disabled" style="display:none;" translate="bikestation.create.typeChooser">Choose...</option>
+                </select>
+
+            </div>
+
+            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="bikestation.create.add">Add</button>
+
+        </form>
+
+        <button class="btn-block btn btn-default voffset3" data-toggle="modal" data-target="#saveLenderModal">
+            <span class="glyphicon glyphicon-edit"></span> Edit Bikes
+        </button>
+
+        <button class="btn-block btn btn-danger" data-toggle="modal" data-target="#saveLenderModal">
+            <span class="glyphicon glyphicon-remove"></span> Delete Bikes
+        </button>
+
+
+        <div class="modal fade" id="saveBikeStationModal" tabindex="-1" role="dialog" aria-labelledby="myBikeStationLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form name="form" role="form" novalidate
+                          class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+                          ng-submit="editBikeStation()">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                    ng-click="clear()">&times;</button>
+                            <h4 class="modal-title" id="myBikeStationLabel" translate="bikestations.header">Create or edit a Bike Station</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!--<div class="form-group">-->
+                            <!--<label>ID</label>-->
+                            <!--<input type="text" class="form-control" name="id"-->
+                            <!--ng-model="bikestation.id" readonly>-->
+                            <!--</div>-->
+
+                            <div class="form-group">
+                                <label translate="bikestations.create.name">Name</label>
+                                <input type="text" class="form-control" name="name"
+                                       ng-model="bikestation.name" ng-minlength=1 ng-maxlength=255 required>
+                            </div>
+
+                            <div class="form-group">
+                                <label translate="bikestations.create.street">Street</label>
+                                <input type="text" class="form-control" name="addressStreet"
+                                       ng-model="bikestation.addressStreet" ng-minlength=1 ng-maxlength=255 required>
+                            </div>
+
+                            <div class="form-group">
+                                <label translate="bikestations.create.city">City</label>
+                                <input type="text" class="form-control" name="addressCity"
+                                       ng-model="bikestation.addressCity" ng-minlength=1 ng-maxlength=255 required>
+                            </div>
+
+                            <div class="form-group">
+                                <label translate="bikestations.create.zip">ZIP</label>
+                                <input type="text" class="form-control" name="addressZip"
+                                       ng-model="bikestation.addressZip" ng-minlength=1 ng-maxlength=255 required>
+                            </div>
+
+                            <div class="form-group">
+                                <label translate="bikestations.create.hours">Opening Hours</label>
+                                <input type="text" class="form-control" name="openingHours"
+                                       ng-model="bikestation.openingHours" ng-minlength=1 ng-maxlength=255 required>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()" translate="bikestations.create.cancel">Cancel
+                            </button>
+                            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="bikestations.create.save">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
 
     <!--<div class="modal fade" id="editBikeModal" tabindex="-1" role="dialog" aria-labelledby="myBikeLabel"-->
          <!--aria-hidden="true">-->
@@ -38,74 +179,4 @@
             <!--</div>-->
         <!--</div>-->
 
-
-
-
-                    <form name="form" class="form-inline" role="form" novalidate
-                          class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
-                          ng-submit="create()">
-
-                        <div class="form-group">
-                            <label class="sr-only" for="bikeTag" translate="bikestation.create.tagLabel">Bike Name/Identifier</label>
-                            <input type="text" placeholder="{{'bikestation.create.tagPlaceholder' | translate}}" class="form-control" name="tag"
-                                   ng-model="bike.tag" id="bikeTag" ng-minlength=1 ng-maxlength=255 required>
-
-                            <label class="sr-only" for="bikeTag" translate="bikestation.create.typeLabel">Bike Type</label>
-                            <select class="form-control" ng-model="bike.bikeType" required name="Bike Type" ng-options="biketype as biketype.type for biketype in biketypes">
-                                <option value="" selected="selected" disabled="disabled" style="display:none;" translate="bikestation.create.typeChooser">Choose...</option>
-                            </select>
-
-                        </div>
-
-                        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="bikestation.create.add">Add</button>
-
-                    </form>
-
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th translate="bikestation.table.header.tag">Bike Tag</th>
-                <th translate="bikestation.table.header.type">Bike Type</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="bike in bikestation.bikes">
-                <td>
-                    {{bike.tag}}
-                    <button type="submit"
-                            ng-click="update(bike.id)"
-                            class="btn btn-xs">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="submit"
-                            ng-click="delete(bike.id)"
-                            ng-disabled="bike.rented"
-                            class="btn btn-danger btn-xs">
-                        <span class="glyphicon glyphicon-remove-circle"></span>
-                    </button>
-
-                </td>
-                <td>
-                    {{bike.bikeType.type}}
-                </td>
-                <td>
-                    <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button" data-style="zoom-out">
-                        <span class="ladda-label">
-                            <span ng-if="bike.rented" translate="bikestation.table.body.return"><span class="glyphicon glyphicon-arrow-left"></span> Return Bike</span>
-                        </span>
-                        <span class="ladda-label">
-                            <span ng-if="!bike.rented" translate="bikestation.table.body.rent"><span class="glyphicon glyphicon-arrow-right"></span> Rent Bike</span>
-                        </span>
-                    </button>
-
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <a href="/#/bikestations"><span class="label label-info" translate="bikestation.back">Back</span></a>
-</div>
 

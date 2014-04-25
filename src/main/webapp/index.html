@@ -22,7 +22,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="development"></div>
-        <div class="container">
+        <div class="container-fluid">
             <div class="header" ng-switch="authenticated">
                 <ul class="nav nav-pills pull-right">
                     <li>
@@ -31,44 +31,6 @@
                             <span translate="global.menu.home">Home</span>
                         </a>
                     </li>
-
-                    <li ng-show=isAuthorized(userRoles.manager)>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#saveLenderModal">
-                            <span class="glyphicon glyphicon-user"></span> Create new Lender
-                        </button>
-                    </li>
-
-                    <div class="modal fade" id="saveLenderModal" tabindex="-1" role="dialog" aria-labelledby="myBikeLabel"
-                         aria-hidden="true"  ng-controller="SignupController">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form class="form" role="form" name="form" ng-submit="createLender()">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                                                ng-click="clear()">&times;</button>
-                                        <h4 class="modal-title" id="myBikeLabel" translate="global.menu.lender.button">Create a Lender</h4>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <div class="form-group">
-                                            <label translate="global.menu.lender.name">Name</label>
-                                            <input type="text" class="form-control" name="tag"
-                                                   ng-model="lender.login" ng-minlength=1 ng-maxlength=50 required>
-
-                                            <label for="password" translate="global.menu.lender.password">Password</label>
-                                            <input type="password" class="form-control" id="password" placeholder="{{'global.menu.lender.passwordPlaceholder' | translate}}"
-                                                   ng-model="lender.password" ng-minlength="3" required="true">
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()" translate="global.menu.lender.cancel">Cancel
-                                        </button>
-                                        <button type="submit" ng-disabled="editform.$invalid" class="btn btn-primary" translate="global.menu.lender.save">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
 
                     <li class="dropdown pointer">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -96,39 +58,23 @@
                         </ul>
                     </li>
 
-                    <li class="dropdown pointer">
-                        <a class="dropdown-toggle" data-toggle="dropdown">
-                            <span>
-                                <span class="glyphicon glyphicon-record"></span>
-                                <span class="hidden-tablet" translate="global.menu.bikestation.demo">
-                                    Demo
-                                </span>
-                                <b class="caret"></b>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/demo"><span class="glyphicon glyphicon-wrench"></span>
-                                &nbsp;<span translate="global.menu.bikestation.bikestationdemo">Bike Station Demo</span></a></li>
-                        </ul>
-                    </li>
-
-                    <li ng-switch-when="true" ng-show=isAuthorized(userRoles.lender) class="dropdown pointer" ng-controller="AdminController">
-                        <a class="dropdown-toggle" data-toggle="dropdown">
-                            <span>
-                                <span class="glyphicon glyphicon-record"></span>
-                                <span class="hidden-tablet" translate="global.menu.bikestation.main">
-                                    Bike Station
-                                </span>
-                                <b class="caret"></b>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/bikestations"><span class="glyphicon glyphicon-wrench"></span>
-                                &nbsp;<span translate="global.menu.bikestation.bikestation">Bike Stations</span></a></li>
-                            <!--<li><a href="#/bikes"><span class="glyphicon glyphicon-wrench"></span>-->
-                                <!--&nbsp;<span translate="global.menu.bikestation.bikes">Bikes</span></a></li>-->
-                        </ul>
-                    </li>
+                    <!--<li ng-switch-when="true" ng-show=isAuthorized(userRoles.lender) class="dropdown pointer" ng-controller="AdminController">-->
+                        <!--<a class="dropdown-toggle" data-toggle="dropdown">-->
+                            <!--<span>-->
+                                <!--<span class="glyphicon glyphicon-record"></span>-->
+                                <!--<span class="hidden-tablet" translate="global.menu.bikestation.main">-->
+                                    <!--Bike Station-->
+                                <!--</span>-->
+                                <!--<b class="caret"></b>-->
+                            <!--</span>-->
+                        <!--</a>-->
+                        <!--<ul class="dropdown-menu">-->
+                            <!--<li><a href="#/bikestations"><span class="glyphicon glyphicon-wrench"></span>-->
+                                <!--&nbsp;<span translate="global.menu.bikestation.bikestation">Bike Stations</span></a></li>-->
+                            <!--&lt;!&ndash;<li><a href="#/bikes"><span class="glyphicon glyphicon-wrench"></span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;&nbsp;<span translate="global.menu.bikestation.bikes">Bikes</span></a></li>&ndash;&gt;-->
+                        <!--</ul>-->
+                    <!--</li>-->
 
                     <li ng-switch-when="true" ng-show=isAuthorized(userRoles.admin) class="dropdown pointer" ng-controller="AdminController">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -188,7 +134,7 @@
 
             </div>
 
-            <div class="well" ng-view=""></div>
+            <div class="" ng-view=""></div>
 
             <div class="footer">
                 <p translate="footer">This is your footer</p>
