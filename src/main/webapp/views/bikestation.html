@@ -4,13 +4,8 @@
 
         <h2>{{bikestation.name}}</h2>
 
-        <div class="col-sm-4 col-md-3 voffset3" ng-repeat="bike in bikestation.bikes">
-            <!--<a href="/#/bikestations/{{bikestation.id}}" role="button" class="btn-block btn btn-info btn-lg btn-bikestation">-->
-                <!--{{bikestation.name}}-->
-                <!--<br>-->
-                <!--<small>Bikes: {{bikestation.numberOfAvailableBikes}} / {{bikestation.numberOfBikes}}</small>-->
-            <!--</a>-->
-            <button ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button" data-style="zoom-out">
+        <div class="col-sm-4 col-md-3 voffset3" ng-repeat="bike in bikestation.bikes" data-drag="true" jqyoui-draggable="{index: $index, animate:true, onStart: 'startDragging(bike)'}" data-jqyoui-options="{revert: 'invalid'}">
+            <div ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button" data-style="zoom-out">
             <span class="ladda-label">
             <p ng-if="bike.rented">
                 {{bike.tag}}
@@ -29,7 +24,7 @@
                 <small><b>Available</b></small>
             </p>
             </span>
-            </button>
+            </div>
         </div>
 
     </div>
@@ -41,13 +36,13 @@
             <span class="glyphicon glyphicon-edit"></span> Edit Bikestation
         </button>
 
-        <button class="btn-block btn btn-danger" data-toggle="modal" data-target="#saveLenderModal">
+        <button class="btn-block btn btn-danger" data-toggle="modal" data-target="#deleteBikestationModal">
             <span class="glyphicon glyphicon-remove"></span> Delete Bikestation
         </button>
 
         <h3 class="voffset5">Add new Bike:</h3>
 
-        <form name="form" class="form" role="form" novalidate
+        <form name="addform" class="form" role="form" novalidate
               class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
               ng-submit="create()">
 
@@ -57,13 +52,13 @@
                        ng-model="bike.tag" id="bikeTag" ng-minlength=1 ng-maxlength=255 required>
 
                 <label class="sr-only" for="bikeTag" translate="bikestation.create.typeLabel">Bike Type</label>
-                <select class="form-control voffset1" ng-model="bike.bikeType" required name="Bike Type" ng-options="biketype as biketype.type for biketype in biketypes">
+                <select class="form-control voffset1" ng-model="bike.bikeType" name="Bike Type" ng-options="biketype as biketype.type for biketype in biketypes" required>
                     <option value="" selected="selected" disabled="disabled" style="display:none;" translate="bikestation.create.typeChooser">Choose...</option>
                 </select>
 
             </div>
 
-            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="bikestation.create.add">Add</button>
+            <button type="submit" ng-disabled="addform.$invalid" class="btn btn-primary" translate="bikestation.create.add">Add</button>
 
         </form>
 
@@ -71,7 +66,7 @@
             <span class="glyphicon glyphicon-edit"></span> Edit Bikes
         </button>
 
-        <button class="btn-block btn btn-danger" data-toggle="modal" data-target="#saveLenderModal">
+        <button class="btn-block btn btn-danger" data-toggle="modal" data-target="#saveLenderModal" data-drop="true" jqyoui-droppable="{onDrop: 'dropCallback'}" data-jqyoui-options="{tolerance: 'touch'}">
             <span class="glyphicon glyphicon-remove"></span> Delete Bikes
         </button>
 
@@ -90,11 +85,6 @@
                             <h4 class="modal-title" id="myBikeStationLabel" translate="bikestations.header">Create or edit a Bike Station</h4>
                         </div>
                         <div class="modal-body">
-                            <!--<div class="form-group">-->
-                            <!--<label>ID</label>-->
-                            <!--<input type="text" class="form-control" name="id"-->
-                            <!--ng-model="bikestation.id" readonly>-->
-                            <!--</div>-->
 
                             <div class="form-group">
                                 <label translate="bikestations.create.name">Name</label>
@@ -137,10 +127,26 @@
             </div>
         </div>
 
+        <div class="modal fade" id="deleteBikestationModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form name="deleteform" role="form" novalidate class="ng-scope ng-invalid" ng-submit="deleteBikeStation(bikestation.id)">
+                        <div class="modal-body">
+                            <h4>Do you really want to delete {{bikestation.name}}?</h2>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </div>
 
 </div>
+
 
 
     <!--<div class="modal fade" id="editBikeModal" tabindex="-1" role="dialog" aria-labelledby="myBikeLabel"-->

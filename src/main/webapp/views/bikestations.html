@@ -4,6 +4,14 @@
 
         <h2>Bikestation Overview <small>Choose Bikestation for more Details..</small></h2>
 
+        <div class="alert alert-success" ng-show="bikestationSuccess || lenderSuccess">
+            Success!
+        </div>
+
+        <!--<div class="alert alert-danger" ng-show="bikestationFailure || lenderFailure">-->
+            <!--Failure!-->
+        <!--</div>-->
+
         <div class="col-sm-4 col-md-3 voffset3" ng-repeat="bikestation in bikestations">
             <a href="/#/bikestations/{{bikestation.id}}" role="button" class="btn-block btn btn-info btn-lg btn-bikestation">
                 {{bikestation.name}}
@@ -12,45 +20,12 @@
             </a>
         </div>
 
-            <!--<div class="table-responsive">-->
-                <!--<table class="table table-striped">-->
-                    <!--<thead>-->
-                    <!--<tr>-->
-                        <!--<th translate="bikestations.table.id">ID</th>-->
-                        <!--<th translate="bikestations.table.name">Name</th>-->
-                        <!--<th></th>-->
-                    <!--</tr>-->
-                    <!--</thead>-->
-                    <!--<tbody>-->
-                    <!--<tr ng-repeat="bikestation in bikestations">-->
-                        <!--<td>{{bikestation.id}}</td>-->
-                        <!--<td><a href="/#/bikestations/{{bikestation.id}}">{{bikestation.name}}</a></td>-->
-                        <!--<td>-->
-                            <!--<button type="submit"-->
-                                    <!--ng-click="update(bikestation.id)"-->
-                                    <!--class="btn"-->
-                                    <!--translate="bikestations.table.edit">-->
-                                <!--<span class="glyphicon glyphicon-pencil"></span> Edit-->
-                            <!--</button>-->
-                            <!--<button type="submit"-->
-                                    <!--ng-click="delete(bikestation.id)"-->
-                                    <!--class="btn btn-danger"-->
-                                    <!--translate="bikestations.table.delete">-->
-                                <!--<span class="glyphicon glyphicon-remove-circle"></span> Delete-->
-                            <!--</button>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                <!--</table>-->
-            <!--</div>-->
-
     </div>
 
     <div class="col-sm-4 col-md-3 sidebar">
 
 
         <button class="btn-block btn btn-lg btn-success" data-toggle="modal" data-target="#saveBikeStationModal" translate="bikestations.createbutton">
-            <!--<span class="glyphicon glyphicon-flash"></span>-->
             Create a new BikeStation
         </button>
 
@@ -72,12 +47,6 @@
                             <h4 class="modal-title" id="myBikeStationLabel" translate="bikestations.header">Create or edit a Bike Station</h4>
                         </div>
                         <div class="modal-body">
-                            <!--<div class="form-group">-->
-                            <!--<label>ID</label>-->
-                            <!--<input type="text" class="form-control" name="id"-->
-                            <!--ng-model="bikestation.id" readonly>-->
-                            <!--</div>-->
-
                             <div class="form-group">
                                 <label translate="bikestations.create.name">Name</label>
                                 <input type="text" class="form-control" name="name"

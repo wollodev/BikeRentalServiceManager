@@ -3,7 +3,7 @@
 /* App Module */
 
 var bikeRentalServiceManagerApp = angular.module('bikeRentalServiceManagerApp', ['http-auth-interceptor', 'tmh.dynamicLocale',
-    'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate', 'google-maps', 'ng-breadcrumbs']);
+    'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate', 'google-maps', 'ng-breadcrumbs', 'ngDragDrop']);
 
 bikeRentalServiceManagerApp
     .config(['$routeProvider', '$httpProvider', '$translateProvider',  'tmhDynamicLocaleProvider', 'USER_ROLES',
@@ -145,13 +145,19 @@ bikeRentalServiceManagerApp
                         authorizedRoles: [USER_ROLES.all]
                     }
                 })
+                // made bike station view default view!
                 .otherwise({
-                    templateUrl: 'views/main.html',
-                    controller: 'MainController',
-                    label: 'Main',
-                    access: {
-                        authorizedRoles: [USER_ROLES.all]
-                    }
+                templateUrl: 'views/bikestations.html',
+                    controller: 'BikeStationController',
+                    label: 'Bikestations',
+                    resolve:{
+                    resolvedBikeStation: ['BikeStation', function (BikeStation) {
+                        return BikeStation.query();
+                    }]
+                },
+                access: {
+                    authorizedRoles: [USER_ROLES.all]
+                }
                 });
 
             // Initialize angular-translate

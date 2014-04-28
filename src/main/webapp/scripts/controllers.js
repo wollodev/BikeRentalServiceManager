@@ -294,11 +294,13 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
                             function () {
                                 $scope.bikestations = BikeStation.query();
                                 $('#saveBikeStationModal').modal('hide');
+                                $scope.bikestationSuccess = true;
                                 $scope.clear();
                             });
 
                     } else {
                         console.log("Geocode for " + address + " was unsuccessful! ()" + status);
+                        $scope.bikestationFailure = true;
                     }
                 });
         };
@@ -320,8 +322,21 @@ bikeRentalServiceManagerApp.controller('BikeStationController', ['$scope', 'reso
         };
     }]);
 
-bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope', '$routeParams', 'BikeStation', 'Bike', '$http', 'BikeType', 'breadcrumbs',
-    function ($scope, $routeParams, BikeStation, Bike, $http, BikeType, breadcrumbs) {
+bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope', '$routeParams', 'BikeStation', 'Bike', '$http', 'BikeType', 'breadcrumbs', '$location',
+    function ($scope, $routeParams, BikeStation, Bike, $http, BikeType, breadcrumbs, $location) {
+
+        $scope.dragging = false;
+
+        $scope.startDragging = function(event, ui, bike) {
+            $scope.draggedBike = bike;
+
+            $scope.dragging = true;
+        }
+
+        $scope.dropCallback = function(event, ui) {
+            console.log($scope.draggedBike);
+            $scope.delete($scope.draggedBike.id);
+        }
 
         // get bikestation from server and put id into breadcrumbs afterwards
         $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId},  function() {
@@ -362,7 +377,7 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
                     console.log(biketype);
                     if (biketype.id == bike.bikeType.id) {
                         bike.bikeType = biketype;
-                        console.log("updat biketype");
+                        console.log("update biketype");
                     }
                 });
             });
@@ -370,6 +385,7 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
         };
 
         $scope.delete = function (id) {
+
             Bike.delete({id: id},
                 function () {
                     $scope.bikestation = BikeStation.get({id: $routeParams.bikestationId});
@@ -413,38 +429,52 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
                 });
         };
 
+        $scope.deleteBikeStation = function (id) {
+            BikeStation.delete({id: id},
+                function () {
+                    $scope.bikestations = BikeStation.query();
+                    //redirect to super view after delete
+                    $('#deleteBikestationModal').modal('hide').on('hidden.bs.modal', function(){
+                        $location.path('/');
+                        $scope.$apply();
+                    });
+                });
+        };
+
         $scope.rent = function (bike) {
 
-            var ladda = document.querySelector("#bike" + bike.id).ladda;
+            // prevent clicks when dragging! hacky?
+            if ($scope.dragging) {
 
-            var rentButton = document.querySelector("#bike" + bike.id);
+                $scope.dragging = false;
+
+            } else {
+
+                var ladda = document.querySelector("#bike" + bike.id).ladda;
+
+                var rentButton = document.querySelector("#bike" + bike.id);
 
 
-            ladda.start();
+                ladda.start();
 
-            console.log("toggle state");
-            console.log(bike);
+                console.log("toggle state");
+                console.log(bike);
 
-            var tmpBike = angular.copy(bike);
+                var tmpBike = angular.copy(bike);
 
-            tmpBike.rented = !tmpBike.rented;
+                tmpBike.rented = !tmpBike.rented;
 
-            delete tmpBike.bikeStationId;
+                delete tmpBike.bikeStationId;
 
-            Bike.save(tmpBike,
-                function () {
-                    bike.rented = tmpBike.rented;
+                Bike.save(tmpBike,
+                    function () {
+                        bike.rented = tmpBike.rented;
 
-                    ladda.stop();
+                        ladda.stop();
 
-                });
+                    });
 
-//            $http.post('app/rest/bikes/' + tmpBike.id + '/changeRentState', null, {params : { state : tmpBike.rented}}).success(
-//                function () {
-//                    bike.rented = tmpBike.rented;
-//
-//                    ladda.stop();
-//                });
+            }
         };
 
     }]);
