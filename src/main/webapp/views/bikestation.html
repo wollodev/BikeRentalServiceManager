@@ -4,7 +4,7 @@
 
         <h2>{{bikestation.name}}</h2>
 
-        <div class="col-sm-4 col-md-3 voffset3" ng-repeat="bike in bikestation.bikes" data-drag="{{!bike.rented}}" jqyoui-draggable="{index: $index, animate:true, onStart: 'startDragging(bike)'}" data-jqyoui-options="{revert: 'invalid'}">
+        <div class="col-sm-4 col-md-3 voffset3" ng-repeat="bike in bikestation.bikes" data-drag="{{!bike.rented}}" jqyoui-draggable="{index: $index, animate:true, onStart: 'startDragging(bike)'}" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}">
             <div ui-ladda id="bike{{ bike.id }}" type="submit" ng-click="rent(bike)" ng-class="{'btn-warning': bike.rented, 'btn-success': !bike.rented}" class="btn btn-block btn-lg ladda-button" data-style="zoom-out">
             <span class="ladda-label">
             <p ng-if="bike.rented">
