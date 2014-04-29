@@ -333,9 +333,12 @@ bikeRentalServiceManagerApp.controller('BikeStationDetailController', ['$scope',
             $scope.dragging = true;
         }
 
-        $scope.dropCallback = function(event, ui) {
-            console.log($scope.draggedBike);
+        $scope.deleteDropCallback = function(event, ui) {
             $scope.delete($scope.draggedBike.id);
+        }
+
+        $scope.editDropCallback = function(event, ui) {
+            $scope.update($scope.draggedBike.id);
         }
 
         // get bikestation from server and put id into breadcrumbs afterwards

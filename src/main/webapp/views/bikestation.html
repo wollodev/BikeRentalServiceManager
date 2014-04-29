@@ -62,11 +62,11 @@
 
         </form>
 
-        <button class="btn-block btn btn-default voffset3 drag-btn" data-toggle="modal" data-target="#saveLenderModal">
+        <button class="btn-block btn btn-default voffset3 drag-btn" data-toggle="modal" data-target="#editBikeModal" data-drop="true" jqyoui-droppable="{onDrop: 'editDropCallback'}" data-jqyoui-options="{tolerance: 'pointer', hoverClass: 'drag-hover'}">
             <span class="glyphicon glyphicon-edit"></span> Drag Bike Here to Edit
         </button>
 
-        <button class="btn-block btn btn-danger drag-btn" data-toggle="modal" data-target="#saveLenderModal" data-drop="true" jqyoui-droppable="{onDrop: 'dropCallback'}" data-jqyoui-options="{tolerance: 'touch'}">
+        <button class="btn-block btn btn-danger drag-btn" data-toggle="modal" data-drop="true" jqyoui-droppable="{onDrop: 'deleteDropCallback'}" data-jqyoui-options="{tolerance: 'pointer', hoverClass: 'drag-hover'}">
             <span class="glyphicon glyphicon-remove"></span> Drag Bike Here to Delete
         </button>
 
@@ -143,46 +143,46 @@
             </div>
         </div>
 
+        <div class="modal fade" id="editBikeModal" tabindex="-1" role="dialog" aria-labelledby="myBikeLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form name="editform" role="form" novalidate class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+                          ng-submit="create()">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                    ng-click="clear()">&times;</button>
+                            <h4 class="modal-title" id="myBikeLabel">Create or edit a Bike</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label>Bike Identifier/Name</label>
+                                <input type="text" class="form-control" name="tag"
+                                       ng-model="editableBike.tag" ng-minlength=1 ng-maxlength=50 required>
+
+                                <label>Bike Type</label>
+                                <select class="form-control" ng-model="editableBike.bikeType" ng-options="biketype as biketype.type for biketype in biketypes">
+                                </select>
+
+                                <label>Note</label>
+                                <textarea class="form-control" rows="4" name="note" ng-model="editableBike.note" required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">Cancel
+                            </button>
+                            <button type="submit" ng-disabled="editform.$invalid" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
 
 
-
-    <!--<div class="modal fade" id="editBikeModal" tabindex="-1" role="dialog" aria-labelledby="myBikeLabel"-->
-         <!--aria-hidden="true">-->
-        <!--<div class="modal-dialog">-->
-            <!--<div class="modal-content">-->
-                <!--<form name="editform" role="form" novalidate class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"-->
-                      <!--ng-submit="create()">-->
-                    <!--<div class="modal-header">-->
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"-->
-                                <!--ng-click="clear()">&times;</button>-->
-                        <!--<h4 class="modal-title" id="myBikeLabel">Create or edit a Bike</h4>-->
-                    <!--</div>-->
-                    <!--<div class="modal-body">-->
-
-                        <!--<div class="form-group">-->
-                            <!--<label>Bike Identifier/Name</label>-->
-                            <!--<input type="text" class="form-control" name="tag"-->
-                                   <!--ng-model="editableBike.tag" ng-minlength=1 ng-maxlength=50 required>-->
-
-                            <!--<label>Bike Type</label>-->
-                            <!--<select class="form-control" ng-model="editableBike.bikeType" ng-options="biketype as biketype.type for biketype in biketypes">-->
-                            <!--</select>-->
-
-                            <!--<label>Note</label>-->
-                            <!--<textarea class="form-control" rows="4" name="note" ng-model="editableBike.note" required></textarea>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="modal-footer">-->
-                        <!--<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">Cancel-->
-                        <!--</button>-->
-                        <!--<button type="submit" ng-disabled="editform.$invalid" class="btn btn-primary">Save</button>-->
-                    <!--</div>-->
-                    <!--</form>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
 
 

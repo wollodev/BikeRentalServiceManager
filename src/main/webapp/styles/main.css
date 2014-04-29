@@ -146,6 +146,10 @@ ul#strength {
     padding: 50px 0;
 }
 
+.drag-hover {
+    border: 2px solid black;
+}
+
 .drag-btn {
     height: 100px;
 }
