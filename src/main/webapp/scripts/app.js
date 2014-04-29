@@ -6,8 +6,8 @@ var bikeRentalServiceManagerApp = angular.module('bikeRentalServiceManagerApp', 
     'ngResource', 'ngRoute', 'ngCookies', 'pascalprecht.translate', 'google-maps', 'ng-breadcrumbs', 'ngDragDrop']);
 
 bikeRentalServiceManagerApp
-    .config(['$routeProvider', '$httpProvider', '$translateProvider',  'tmhDynamicLocaleProvider', 'USER_ROLES',
-        function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES) {
+    .config(['$routeProvider', '$httpProvider', '$translateProvider',  'tmhDynamicLocaleProvider', 'USER_ROLES', '$compileProvider',
+        function ($routeProvider, $httpProvider, $translateProvider, tmhDynamicLocaleProvider, USER_ROLES, $compileProvider) {
             $routeProvider
                 .when('/login', {
                     templateUrl: 'views/login.html',
@@ -159,6 +159,64 @@ bikeRentalServiceManagerApp
                     authorizedRoles: [USER_ROLES.all]
                 }
                 });
+
+            // GLOBAL MESSAGES
+
+            var elementsList = $();
+            var showMessage = function(content, cl, time, type) {
+                $('<div><button type="button" class="close" data-dismiss="alert">&times;</button></div>')
+                    .addClass('message')
+                    .addClass(cl)
+                    .addClass('alert')
+                    .addClass(type)
+                    .hide()
+                    .fadeIn('fast')
+                    .delay(time)
+                    .fadeOut('fast', function() { $(this).remove(); })
+                    .appendTo(elementsList)
+                    .text(content);
+            };
+
+            $httpProvider.responseInterceptors.push(function($timeout, $q) {
+                return function(promise) {
+                    var errorInterval = 2000;
+                    var successInterval = 500;
+
+                    return promise.then(function(successResponse) {
+                        if (successResponse.config.method.toUpperCase() != 'GET') {
+//                            var alertType = 'alert-success';
+//                            showMessage('Successful', 'successMessage', successInterval, alertType);
+                        }
+                        return successResponse;
+
+                    }, function(errorResponse) {
+                        var alertType = 'alert-danger';
+                        switch (errorResponse.status) {
+                            case 401:
+                                showMessage('Wrong usename or password', 'errorMessage', errorInterval, alertType);
+                                break;
+                            case 403:
+                                showMessage('You don\'t have the right to do this', 'errorMessage', errorInterval, alertType);
+                                break;
+                            case 500:
+                                showMessage('Server internal error: ' + errorResponse.data, 'errorMessage', errorInterval, alertType);
+                                break;
+                            default:
+                                showMessage('Error ' + errorResponse.status + ': ' + errorResponse.data, 'errorMessage', errorInterval, alertType);
+                        }
+                        return $q.reject(errorResponse);
+                    });
+                };
+            });
+
+            $compileProvider.directive('appMessages', function() {
+                var directiveDefinitionObject = {
+                    link: function(scope, element, attrs) { elementsList.push($(element)); }
+                };
+                return directiveDefinitionObject;
+            });
+            // END GLOBAL MESSAGES
+
 
             // Initialize angular-translate
             $translateProvider.useStaticFilesLoader({
