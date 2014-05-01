@@ -91,7 +91,7 @@ public class CustomPersistentRememberMeServices extends
     @Override protected String extractRememberMeCookie(HttpServletRequest request) {
         String token = request.getHeader(HEADER_SECURITY_TOKEN);
         if ((token == null) || (token.length() == 0)) {
-            return null;
+            return super.extractRememberMeCookie(request);
         }
 
         return token;
