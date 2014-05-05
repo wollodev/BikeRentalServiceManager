@@ -10,7 +10,7 @@ import java.io.Serializable;
  * A Bike.
  */
 @Entity
-@Table(name = "T_BIKE")
+@Table(name = "T_BIKE", uniqueConstraints = @UniqueConstraint(columnNames = {"tag", "bike_station_id"}))
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Bike implements Serializable {
 
